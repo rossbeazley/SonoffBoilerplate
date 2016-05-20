@@ -15,6 +15,7 @@
    gpio 14 - pin 5 on header
 
 */
+
 #define SONOFF_BUTTON    0
 #define SONOFF_RELAY    12
 #define SONOFF_LED      13
@@ -52,8 +53,12 @@ const int CMD_WAIT = 0;
 const int CMD_BUTTON_CHANGE = 1;
 
 int cmd = CMD_WAIT;
-int state = HIGH;
+int relayState = HIGH;
 
+//inverted button state
+int buttonState = HIGH;
+
+static long startPress = 0;
 
 void tick()
 {
@@ -74,12 +79,20 @@ void configModeCallback (WiFiManager *myWiFiManager) {
 
 
 
-static int relayState = 0;
-static long startPress = 0;
-
 void setState(int s) {
   digitalWrite(SONOFF_RELAY, s);
   digitalWrite(SONOFF_LED, (s + 1) % 2); // led is active low
+  Blynk.virtualWrite(6, s*255);
+}
+
+void turnOn() {
+  relayState = LOW;
+  setState(relayState);
+}
+
+void turnOff() {
+  relayState = HIGH;
+  setState(relayState);
 }
 
 void toggleState() {
@@ -93,6 +106,81 @@ bool shouldSaveConfig = false;
 void saveConfigCallback () {
   Serial.println("Should save config");
   shouldSaveConfig = true;
+}
+
+
+void toggle() {
+  Serial.println("toggle state");
+  Serial.println(relayState);
+  relayState = relayState == HIGH ? LOW : HIGH;
+  setState(relayState);
+}
+
+void restart() {
+  ESP.reset();
+  delay(1000);
+}
+
+void reset() {
+  //reset settings to defaults
+  /*
+    WMSettings defaults;
+    settings = defaults;
+    EEPROM.begin(512);
+    EEPROM.put(0, settings);
+    EEPROM.end();
+  */
+  //reset wifi credentials
+  WiFi.disconnect();
+  delay(1000);
+  ESP.reset();
+  delay(1000);
+}
+
+
+//off - button
+BLYNK_WRITE(0) {
+  int a = param.asInt();
+  if (a != 0) {
+    turnOff();
+  }
+}
+
+//on - button
+BLYNK_WRITE(1) {
+  int a = param.asInt();
+  if (a != 0) {
+    turnOn();
+  }
+}
+
+//toggle - button
+BLYNK_WRITE(2) {
+  int a = param.asInt();
+  if (a != 0) {
+    toggle();
+  }
+}
+
+//restart - button
+BLYNK_WRITE(3) {
+  int a = param.asInt();
+  if (a != 0) {
+    restart();
+  }
+}
+
+//restart - button
+BLYNK_WRITE(4) {
+  int a = param.asInt();
+  if (a != 0) {
+    reset();
+  }
+}
+
+//status - display
+BLYNK_READ(5) {
+  Blynk.virtualWrite(5, relayState);
 }
 
 void setup()
@@ -118,7 +206,7 @@ void setup()
   EEPROM.get(0, settings);
   EEPROM.end();
 
-  if(settings.salt != EEPROM_SALT) {
+  if (settings.salt != EEPROM_SALT) {
     Serial.println("Invalid settings in EEPROM, trying with defaults");
     WMSettings defaults;
     settings = defaults;
@@ -130,7 +218,7 @@ void setup()
 
   WiFiManagerParameter custom_blynk_text("Blynk config. <br/> No token to disable.");
   wifiManager.addParameter(&custom_blynk_text);
-  
+
   WiFiManagerParameter custom_blynk_token("blynk-token", "blynk token", settings.blynkToken, 33);
   wifiManager.addParameter(&custom_blynk_token);
 
@@ -154,7 +242,7 @@ void setup()
   //save the custom parameters to FS
   if (shouldSaveConfig) {
     Serial.println("Saving config");
-    
+
     strcpy(settings.blynkToken, custom_blynk_token.getValue());
     strcpy(settings.blynkServer, custom_blynk_server.getValue());
     strcpy(settings.blynkPort, custom_blynk_port.getValue());
@@ -162,17 +250,17 @@ void setup()
     Serial.println(settings.blynkToken);
     Serial.println(settings.blynkServer);
     Serial.println(settings.blynkPort);
-    
+
     EEPROM.begin(512);
     EEPROM.put(0, settings);
     EEPROM.end();
   }
-  
+
   //config blynk
-  if(strlen(settings.blynkToken) == 0) {
+  if (strlen(settings.blynkToken) == 0) {
     BLYNK_ENABLED = false;
-  } 
-  if(BLYNK_ENABLED) {
+  }
+  if (BLYNK_ENABLED) {
     Blynk.config(settings.blynkToken, settings.blynkServer, atoi(settings.blynkPort));
   }
 
@@ -208,8 +296,8 @@ void setup()
   //setup relay
   pinMode(SONOFF_RELAY, OUTPUT);
 
-  setState(HIGH);
-
+  turnOn();
+  
   Serial.println("done setup");
 }
 
@@ -220,7 +308,7 @@ void loop()
   //ota loop
   ArduinoOTA.handle();
   //blynk connect and run loop
-  if(BLYNK_ENABLED) {
+  if (BLYNK_ENABLED) {
     Blynk.run();
   }
   //delay(200);
@@ -230,37 +318,23 @@ void loop()
       break;
     case CMD_BUTTON_CHANGE:
       int currentState = digitalRead(SONOFF_BUTTON);
-      if (currentState != state) {
-        if (state == LOW && currentState == HIGH) {
+      if (currentState != buttonState) {
+        if (buttonState == LOW && currentState == HIGH) {
           long duration = millis() - startPress;
           if (duration < 1000) {
             Serial.println("short press - toggle relay");
-            relayState = !relayState;
-            setState(relayState);
+            toggle();
           } else if (duration < 5000) {
             Serial.println("medium press - reset");
-            ESP.reset();
-            delay(1000);
+            restart();
           } else if (duration < 60000) {
             Serial.println("long press - reset settings");
-            //reset settings to defaults
-            /* 
-            WMSettings defaults;
-            settings = defaults;
-            EEPROM.begin(512);
-            EEPROM.put(0, settings);
-            EEPROM.end();
-            */
-            //reset wifi credentials
-            WiFi.disconnect();
-            delay(1000);
-            ESP.reset();
-            delay(1000);
+            reset();
           }
-        } else if (state == HIGH && currentState == LOW) {
+        } else if (buttonState == HIGH && currentState == LOW) {
           startPress = millis();
         }
-        state = currentState;
+        buttonState = currentState;
       }
       break;
   }
