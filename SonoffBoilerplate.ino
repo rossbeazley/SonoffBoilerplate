@@ -199,7 +199,8 @@ void setup()
   //set callback that gets called when connecting to previous WiFi fails, and enters Access Point mode
   wifiManager.setAPCallback(configModeCallback);
 
-  //timeout
+  //timeout - this will quit WiFiManager if it's not configured in 3 minutes, causing a restart
+  wifiManager.setConfigPortalTimeout(180);
 
   //custom params
   EEPROM.begin(512);
