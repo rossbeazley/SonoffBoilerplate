@@ -54,11 +54,22 @@ The status will come as a response on topic `deviceId/channel-0/status`
 
 ### More information
 Here are some posts I wrote on making all this work that you might find helpful
-[Sonoff (ESP8266) reprogramming – Control Mains from Anywhere](https://tzapu.com/sonoff-firmware-boilerplate-tutorial/) 
+
+
 Part 1 - Original Sonoff Introduction
-[Sonoff (ESP8266) Part 2 – Control with Blynk App on iOS or Android](https://tzapu.com/sonoff-esp8266-control-blynk-ios-android/)
+
+[Sonoff (ESP8266) reprogramming – Control Mains from Anywhere](https://tzapu.com/sonoff-firmware-boilerplate-tutorial/) 
+
+
 Part 2 - Original Sonoff firmware replacement
-[Sonoff POW and S20 Smart Socket from ITEAD](https://tzapu.com/sonoff-pow-and-s20-smart-socket-itead/)
+
+[Sonoff (ESP8266) Part 2 – Control with Blynk App on iOS or Android](https://tzapu.com/sonoff-esp8266-control-blynk-ios-android/)
+
 Part 3 - Sonoff POW and S20 Smart Socket Introduction
-[Coming Soon]()
+
+[Sonoff POW and S20 Smart Socket from ITEAD](https://tzapu.com/sonoff-pow-and-s20-smart-socket-itead/)
+
+
 Part 4 - Sonoff S20 firmware replacement
+
+[Coming Soon]()
