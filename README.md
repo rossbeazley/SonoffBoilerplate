@@ -13,7 +13,7 @@ Features include (~~strikethrough~~ = not implemented yet)
 - wifi credentials configuration/onboarding using [WiFiManager](https://github.com/tzapu/WiFiManager)
 - web configuration portal to setup tokes, servers, ports, etc
 - Blynk integration
-- ~~MQTT integration~~
+- MQTT integration
 - ~~HTTP sever API~~
 - OTA over the air firmware update
 - turn off and on relay from onboard button ~~and external button~~
@@ -36,3 +36,11 @@ Being your first run, connect to the Access Point the module created and configu
 After it's configured and connected, the green LED should stay lit, and the relay should be enabled (this is the default).
 
 OTA should also be enabled now and you can do future updates over the air.
+
+MQTT has now been added
+You can send messages to `deviceId/channel-0` with the following parameters:
+- no parameter (blank) and the device will send it's status back
+- 'on' to turn on
+- 'off' to turn off
+- 'toggle' to toggle between on and off
+The status will come as a response on topic `deviceId/channel-0/status`
