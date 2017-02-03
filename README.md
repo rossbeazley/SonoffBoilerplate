@@ -35,8 +35,15 @@ Being your first run, connect to the Access Point the module created and configu
 
 After it's configured and connected, the green LED should stay lit, and the relay should be enabled (this is the default).
 
-OTA should also be enabled now and you can do future updates over the air.
+### Over-The-Air updates
+OTA should also be enabled now and you can do future updates over the air. 
+It uses the basic ArduinoOTA available in Arduino IDE port of the ESP8266 core.
 
+### Blynk App 
+Blynk App is supported in both local server or cloud mode. 
+Add the token and the server details in the web config portal.
+
+### MQTT Support
 MQTT has now been added
 You can send messages to `deviceId/channel-0` with the following parameters:
 - no parameter (blank) and the device will send it's status back
@@ -44,3 +51,14 @@ You can send messages to `deviceId/channel-0` with the following parameters:
 - 'off' to turn off
 - 'toggle' to toggle between on and off
 The status will come as a response on topic `deviceId/channel-0/status`
+
+### More information
+Here are some posts I wrote on making all this work that you might find helpful
+[Sonoff (ESP8266) reprogramming – Control Mains from Anywhere](https://tzapu.com/sonoff-firmware-boilerplate-tutorial/) 
+Part 1 - Original Sonoff Introduction
+[Sonoff (ESP8266) Part 2 – Control with Blynk App on iOS or Android](https://tzapu.com/sonoff-esp8266-control-blynk-ios-android/)
+Part 2 - Original Sonoff firmware replacement
+[Sonoff POW and S20 Smart Socket from ITEAD](https://tzapu.com/sonoff-pow-and-s20-smart-socket-itead/)
+Part 3 - Sonoff POW and S20 Smart Socket Introduction
+[Coming Soon]()
+Part 4 - Sonoff S20 firmware replacement
