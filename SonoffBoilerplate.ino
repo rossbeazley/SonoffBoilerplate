@@ -46,7 +46,7 @@ static bool BLYNK_ENABLED = true;
 #endif
 
 #ifdef INCLUDE_MQTT_SUPPORT
-#include <PubSubClient.h>
+#include <PubSubClient.h>        //https://github.com/Imroy/pubsubclient
 
 WiFiClient wclient;
 PubSubClient mqttClient(wclient);
