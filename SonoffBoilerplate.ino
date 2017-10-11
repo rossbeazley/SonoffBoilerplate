@@ -29,7 +29,7 @@ const int SONOFF_RELAY_PINS[4] =    {12, 12, 12, 12};
 #define HOSTNAME "sonoff"
 
 //comment out to completly disable respective technology
-#define INCLUDE_BLYNK_SUPPORT
+//#define INCLUDE_BLYNK_SUPPORT
 #define INCLUDE_MQTT_SUPPORT
 
 
@@ -98,6 +98,7 @@ Ticker ticker;
 
 const int CMD_WAIT = 0;
 const int CMD_BUTTON_CHANGE = 1;
+const int CMD_INPUT_CHANGE = 2;
 
 int cmd = CMD_WAIT;
 //int relayState = HIGH;
@@ -191,6 +192,10 @@ void turnOff(int channel = 0) {
 
 void toggleState() {
   cmd = CMD_BUTTON_CHANGE;
+}
+
+void toggleInputState() {
+  cmd = CMD_INPUT_CHANGE;
 }
 
 //flag for saving data
@@ -516,6 +521,10 @@ void setup()
   pinMode(SONOFF_BUTTON, INPUT);
   attachInterrupt(SONOFF_BUTTON, toggleState, CHANGE);
 
+  //setup input
+  pinMode(SONOFF_INPUT, INPUT);
+  attachInterrupt(SONOFF_BUTTON, toggleInputState, CHANGE);
+
   //setup relay
   //TODO multiple relays
   pinMode(SONOFF_RELAY_PINS[0], OUTPUT);
@@ -603,6 +612,15 @@ void loop()
           startPress = millis();
         }
         buttonState = currentState;
+      }
+      break;
+    case CMD_INPUT_CHANGE:
+      int inputState = digitalRead(SONOFF_INPUT);
+      Serial.println("inout change ");
+      if(inputState == LOW) {
+        turnOff();
+      } else {
+        turnOn();
       }
       break;
   }
