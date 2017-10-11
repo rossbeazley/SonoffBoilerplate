@@ -195,7 +195,13 @@ void toggleState() {
 }
 
 void toggleInputState() {
-  cmd = CMD_INPUT_CHANGE;
+  int inputState = digitalRead(SONOFF_INPUT);
+      if(inputState == LOW) {
+        turnOff();
+      } else {
+        turnOn();
+      }
+  
 }
 
 //flag for saving data
@@ -614,15 +620,7 @@ void loop()
         buttonState = currentState;
       }
       break;
-    case CMD_INPUT_CHANGE:
-      int inputState = digitalRead(SONOFF_INPUT);
-      Serial.println("inout change ");
-      if(inputState == LOW) {
-        turnOff();
-      } else {
-        turnOn();
-      }
-      break;
+
   }
 
 
