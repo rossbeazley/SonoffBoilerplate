@@ -529,7 +529,7 @@ void setup()
 
   //setup input
   pinMode(SONOFF_INPUT, INPUT);
-  attachInterrupt(SONOFF_BUTTON, toggleInputState, CHANGE);
+  attachInterrupt(SONOFF_INPUT, toggleInputState, CHANGE);
 
   //setup relay
   //TODO multiple relays
@@ -599,7 +599,7 @@ void loop()
   switch (cmd) {
     case CMD_WAIT:
       break;
-    case CMD_BUTTON_CHANGE:
+    case CMD_BUTTON_CHANGE: {
       int currentState = digitalRead(SONOFF_BUTTON);
       if (currentState != buttonState) {
         if (buttonState == LOW && currentState == HIGH) {
@@ -618,7 +618,7 @@ void loop()
           startPress = millis();
         }
         buttonState = currentState;
-      }
+      }}
       break;
 
   }
