@@ -4,6 +4,8 @@ https://github.com/esp8266/Arduino
 
 This is a replacement firmware (Arduino IDE with ESP8266 core needed) for the ESP8266 based Sonoff devices. Use it as a starting block for customizing your Sonoff.
 
+https://randomnerdtutorials.com/how-to-flash-a-custom-firmware-to-sonoff/
+
 ## What's a "Sonoff"?
 Sonoff is just a small ESP8266 based module, that can toggle mains power on it's output. It has everything included in a nice plastic package.
 See more here [Sonoff manufacturer website](https://www.itead.cc/sonoff-wifi-wireless-switch.html)
