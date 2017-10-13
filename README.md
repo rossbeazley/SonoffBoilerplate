@@ -1,5 +1,7 @@
 # SonoffBoilerplate
 
+https://github.com/esp8266/Arduino
+
 This is a replacement firmware (Arduino IDE with ESP8266 core needed) for the ESP8266 based Sonoff devices. Use it as a starting block for customizing your Sonoff.
 
 ## What's a "Sonoff"?
