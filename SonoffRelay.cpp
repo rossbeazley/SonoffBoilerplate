@@ -1,3 +1,5 @@
+#include <Hash.h>
+
 #include <ArduinoOTA.h>
 
 #import "SonoffRelay.h"
@@ -10,9 +12,22 @@ void SonoffRelay::relayInit(int channel) {
   pinMode(SONOFF_RELAY_PINS[channel], OUTPUT);
 }
 
+void SonoffRelay::announce(int state) {
+  //for (int i = 0; i < views.size(); i++) {
+  //  views[i]->state(state);
+  //}
+  obs->state(state);
+}
+
+void SonoffRelay::attachObserver(RelayObserver *observer) {
+    //views.push_back(obs);
+    obs = observer;
+}
+
 void SonoffRelay::pokeRelay(int state, int channel) {
   digitalWrite(SONOFF_RELAY_PINS[channel], state);
   // announce new state
+  SonoffRelay::announce(state);
 }
 
 void SonoffRelay::turnOn(int channel) {
