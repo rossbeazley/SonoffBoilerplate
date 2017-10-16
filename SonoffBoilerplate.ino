@@ -20,7 +20,6 @@
 #define   SONOFF_INPUT              14
 #define   SONOFF_LED                13
 #define   SONOFF_AVAILABLE_CHANNELS 1
-const int SONOFF_RELAY_PINS[4] =    {12, 12, 12, 12};
 //if this is false, led is used to signal startup state, then always on
 //if it s true, it is used to signal startup state, then mirrors relay state
 //S20 Smart Socket works better with it false
@@ -36,6 +35,7 @@ const int SONOFF_RELAY_PINS[4] =    {12, 12, 12, 12};
    Should not need to edit below this line *
  * *****************************************/
 #include <ESP8266WiFi.h>
+#include "SonoffRelay.h"
 
 #ifdef INCLUDE_MQTT_SUPPORT
 #include <PubSubClient.h>        //https://github.com/Imroy/pubsubclient
@@ -91,6 +91,7 @@ int cmd = CMD_WAIT;
 
 //inverted button state
 int buttonState = HIGH;
+int inputStateCount = 5;
 
 static long startPress = 0;
 
@@ -135,7 +136,7 @@ void updateBlynk(int channel) {
 
 void updateMQTT(int channel) {
 #ifdef INCLUDE_MQTT_SUPPORT
-  int state = digitalRead(SONOFF_RELAY_PINS[channel]);
+  int state = currentState(channel);
   char topic[50];
   sprintf(topic, "%s/channel-%d/status", settings.mqttTopic, channel);
   String stateString = state == 0 ? "off" : "on";
@@ -146,9 +147,9 @@ void updateMQTT(int channel) {
 #endif
 }
 
+//THE NEEDS IMPLEMENTING, MAYBE THROUGH OBSERVER OF RELAY
 void setState(int state, int channel) {
-  //relay
-  digitalWrite(SONOFF_RELAY_PINS[channel], state);
+
 
   //led
   if (SONOFF_LED_RELAY_STATE) {
@@ -160,28 +161,13 @@ void setState(int state, int channel) {
 
 }
 
-void turnOn(int channel = 0) {
-  int relayState = HIGH;
-  setState(relayState, channel);
-}
-
-void turnOff(int channel = 0) {
-  int relayState = LOW;
-  setState(relayState, channel);
-}
 
 void toggleState() {
   cmd = CMD_BUTTON_CHANGE;
 }
 
 void toggleInputState() {
-  int inputState = digitalRead(SONOFF_INPUT);
-      if(inputState == LOW) {
-        turnOff();
-      } else {
-        turnOn();
-      }
-  
+  cmd = CMD_INPUT_CHANGE;
 }
 
 //flag for saving data
@@ -193,13 +179,6 @@ void saveConfigCallback () {
   shouldSaveConfig = true;
 }
 
-
-void toggle(int channel = 0) {
-  Serial.println("toggle state");
-  Serial.println(digitalRead(SONOFF_RELAY_PINS[channel]));
-  int relayState = digitalRead(SONOFF_RELAY_PINS[channel]) == HIGH ? LOW : HIGH;
-  setState(relayState, channel);
-}
 
 void restart() {
   //TODO turn off relays before restarting
@@ -260,13 +239,13 @@ void mqttCallback(const MQTT::Publish& pub) {
       int channel = channelString.toInt();
       Serial.println(channel);
       if (payload == "on") {
-        turnOn(channel);
+        turnOn();
       }
       if (payload == "off") {
-        turnOff(channel);
+        turnOff();
       }
       if (payload == "toggle") {
-        toggle(channel);
+        toggle();
       }
       if(payload == "") {
         updateMQTT(channel);
@@ -409,12 +388,12 @@ void setup()
   attachInterrupt(SONOFF_BUTTON, toggleState, CHANGE);
 
   //setup input
-  pinMode(SONOFF_INPUT, INPUT);
+  pinMode(SONOFF_INPUT, INPUT_PULLUP);
   attachInterrupt(SONOFF_INPUT, toggleInputState, CHANGE);
 
   //setup relay
   //TODO multiple relays
-  pinMode(SONOFF_RELAY_PINS[0], OUTPUT);
+  relayInit();
 
    //TODO this should move to last state maybe
    //TODO multi channel support
@@ -473,27 +452,37 @@ void loop()
   switch (cmd) {
     case CMD_WAIT:
       break;
-    case CMD_BUTTON_CHANGE: {
-      int currentState = digitalRead(SONOFF_BUTTON);
-      if (currentState != buttonState) {
-        if (buttonState == LOW && currentState == HIGH) {
-          long duration = millis() - startPress;
-          if (duration < 1000) {
-            Serial.println("short press - toggle relay");
-            toggle();
-          } else if (duration < 5000) {
-            Serial.println("medium press - reset");
-            restart();
-          } else if (duration < 60000) {
-            Serial.println("long press - reset settings");
-            reset();
+    case CMD_BUTTON_CHANGE: 
+    {
+        int currentState = digitalRead(SONOFF_BUTTON);
+        if (currentState != buttonState) {
+          if (buttonState == LOW && currentState == HIGH) {
+            long duration = millis() - startPress;
+            if (duration < 1000) {
+              Serial.println("short press - toggle relay");
+              toggle();
+            } else if (duration < 5000) {
+              Serial.println("medium press - reset");
+              restart();
+            } else if (duration < 60000) {
+              Serial.println("long press - reset settings");
+              reset();
+            }
+          } else if (buttonState == HIGH && currentState == LOW) {
+            startPress = millis();
           }
-        } else if (buttonState == HIGH && currentState == LOW) {
-          startPress = millis();
+          buttonState = currentState;
         }
-        buttonState = currentState;
-      }}
-      break;
+    }
+    break;
+    case CMD_INPUT_CHANGE: {
+      if(inputStateCount--<=0) {
+        toggle();
+        cmd = CMD_WAIT;
+      }
+      
+    }
+    break;
 
   }
 
