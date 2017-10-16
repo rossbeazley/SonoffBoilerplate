@@ -95,6 +95,8 @@ int inputStateCount = 5;
 
 static long startPress = 0;
 
+SonoffRelay relay(12);
+
 //http://stackoverflow.com/questions/9072320/split-string-into-string-array
 String getValue(String data, char separator, int index)
 {
@@ -136,7 +138,7 @@ void updateBlynk(int channel) {
 
 void updateMQTT(int channel) {
 #ifdef INCLUDE_MQTT_SUPPORT
-  int state = currentState(channel);
+  int state = relay.currentState(channel);
   char topic[50];
   sprintf(topic, "%s/channel-%d/status", settings.mqttTopic, channel);
   String stateString = state == 0 ? "off" : "on";
@@ -239,13 +241,13 @@ void mqttCallback(const MQTT::Publish& pub) {
       int channel = channelString.toInt();
       Serial.println(channel);
       if (payload == "on") {
-        turnOn();
+        relay.turnOn();
       }
       if (payload == "off") {
-        turnOff();
+        relay.turnOff();
       }
       if (payload == "toggle") {
-        toggle();
+        relay.toggle();
       }
       if(payload == "") {
         updateMQTT(channel);
@@ -393,14 +395,16 @@ void setup()
 
   //setup relay
   //TODO multiple relays
-  relayInit();
+  
+  
+  relay.relayInit();
 
    //TODO this should move to last state maybe
    //TODO multi channel support
   if (strcmp(settings.bootState, "on") == 0) {
-    turnOn();
+    relay.turnOn();
   } else {
-    turnOff();
+    relay.turnOff();
   }
 
   //setup led
@@ -460,7 +464,7 @@ void loop()
             long duration = millis() - startPress;
             if (duration < 1000) {
               Serial.println("short press - toggle relay");
-              toggle();
+              relay.toggle();
             } else if (duration < 5000) {
               Serial.println("medium press - reset");
               restart();
@@ -477,7 +481,7 @@ void loop()
     break;
     case CMD_INPUT_CHANGE: {
       if(inputStateCount--<=0) {
-        toggle();
+        relay.toggle();
         cmd = CMD_WAIT;
       }
       

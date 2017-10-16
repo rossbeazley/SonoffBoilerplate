@@ -2,29 +2,31 @@
 
 #import "SonoffRelay.h"
 
-const int SONOFF_RELAY_PINS[4] =    {12, 12, 12, 12};
-
-void relayInit(int channel) {
-pinMode(SONOFF_RELAY_PINS[channel], OUTPUT);
+SonoffRelay::SonoffRelay(int gpiopin) {
+  _gpiopin = gpiopin;
 }
 
-void pokeRelay(int state, int channel) {
+void SonoffRelay::relayInit(int channel) {
+  pinMode(SONOFF_RELAY_PINS[channel], OUTPUT);
+}
+
+void SonoffRelay::pokeRelay(int state, int channel) {
   digitalWrite(SONOFF_RELAY_PINS[channel], state);
   // announce new state
 }
 
-void turnOn(int channel) {
+void SonoffRelay::turnOn(int channel) {
   int relayState = HIGH;
   pokeRelay(relayState, channel);
 }
 
-void turnOff(int channel) {
+void SonoffRelay::turnOff(int channel) {
   int relayState = LOW;
   pokeRelay(relayState, channel);
 }
 
 
-void toggle(int channel) {
+void SonoffRelay::toggle(int channel) {
   Serial.println("toggle state");
   Serial.println(digitalRead(SONOFF_RELAY_PINS[channel]));
   int relayState = digitalRead(SONOFF_RELAY_PINS[channel]) == HIGH ? LOW : HIGH;
@@ -32,6 +34,6 @@ void toggle(int channel) {
 }
 
 
-int currentState(int channel) {
+int SonoffRelay::currentState(int channel) {
   return digitalRead(SONOFF_RELAY_PINS[channel]);
 }
