@@ -42,7 +42,7 @@
 
 WiFiClient wclient;
 PubSubClient mqttClient(wclient);
-MQTTOutbound mqttOutbound(mqttClient);
+
 
 static bool MQTT_ENABLED              = true;
 int         lastMQTTConnectionAttempt = 0;
@@ -74,6 +74,12 @@ typedef struct {
 } WMSettings;
 
 WMSettings settings;
+
+
+#include "MQTTOutbound.h"
+MQTTOutbound * mqttOutbound;
+
+
 
 #include <ArduinoOTA.h>
 
@@ -151,11 +157,11 @@ void updateMQTT(int channel) {
 }
 
 //THE NEEDS IMPLEMENTING, MAYBE THROUGH OBSERVER OF RELAY
-void setState(int state, int channel) {
+void setState(int pstate, int channel) {
 
   //MQTT
   int state = relay.currentState(channel);
-  mqttOutbound.updateMQTT(channel,state);
+  mqttOutbound->updateMQTT(channel,state);
 
 }
 
@@ -285,6 +291,8 @@ void setup()
     settings = defaults;
   }
 
+  MQTTOutbound mob(mqttClient,settings.mqttTopic);
+  mqttOutbound = &mob;
 
   WiFiManagerParameter custom_boot_state("boot-state", "on/off on boot", settings.bootState, 33);
   wifiManager.addParameter(&custom_boot_state);

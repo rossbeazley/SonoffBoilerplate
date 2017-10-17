@@ -5,7 +5,7 @@
 SonoffRelay::SonoffRelay(int gpiopin) {
   _gpiopin = gpiopin;
   _currentState=HIGH;
-  pokeRelay(_curentState); 
+  this->pokeRelay(_currentState); 
 }
 
 void SonoffRelay::relayInit(int channel) {
@@ -19,7 +19,7 @@ void SonoffRelay::announce(int state) {
 }
 
 void SonoffRelay::attachObserver(RelayObserver *observer) {
-    views.push_back(obs);
+    views.push_back(observer);
 }
 
 void SonoffRelay::pokeRelay(int state, int channel) {

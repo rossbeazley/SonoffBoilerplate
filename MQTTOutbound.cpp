@@ -1,7 +1,7 @@
 
 #include "MQTTOutbound.h"
 
-MQTTOutbound::MQTTOutbound(PubSubClient & psC, char * mqttTopic) : _mqttClient{psC}, _mqttTopic{mqttTopic}
+MQTTOutbound::MQTTOutbound(PubSubClient & psC, char * mqttTopic) : _mqttClient(psC), _mqttTopic{mqttTopic}
 {
   // pull in topic from the settings object
   // 
