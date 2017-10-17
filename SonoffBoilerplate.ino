@@ -77,7 +77,7 @@ WMSettings settings;
 
 
 #include "MQTTOutbound.h"
-MQTTOutbound * mqttOutbound;
+MQTTOutbound * mqttOutbound = nullptr;
 
 
 
