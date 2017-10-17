@@ -42,6 +42,7 @@
 
 WiFiClient wclient;
 PubSubClient mqttClient(wclient);
+MQTTOutbound mqttOutbound(mqttClient);
 
 static bool MQTT_ENABLED              = true;
 int         lastMQTTConnectionAttempt = 0;
@@ -152,14 +153,9 @@ void updateMQTT(int channel) {
 //THE NEEDS IMPLEMENTING, MAYBE THROUGH OBSERVER OF RELAY
 void setState(int state, int channel) {
 
-
-  //led
-  if (SONOFF_LED_RELAY_STATE) {
-    digitalWrite(SONOFF_LED, (state + 1) % 2); // led is active low
-  }
-
   //MQTT
-  updateMQTT(channel);
+  int state = relay.currentState(channel);
+  mqttOutbound.updateMQTT(channel,state);
 
 }
 

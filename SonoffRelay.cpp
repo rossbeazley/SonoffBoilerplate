@@ -1,8 +1,11 @@
-
+#include "Arduino.h"
 #include "SonoffRelay.h"
 
+//TODO move member init to out of constructor block
 SonoffRelay::SonoffRelay(int gpiopin) {
   _gpiopin = gpiopin;
+  _currentState=HIGH;
+  pokeRelay(_curentState); 
 }
 
 void SonoffRelay::relayInit(int channel) {
@@ -10,21 +13,20 @@ void SonoffRelay::relayInit(int channel) {
 }
 
 void SonoffRelay::announce(int state) {
-  //for (int i = 0; i < views.size(); i++) {
-  //  views[i]->state(state);
-  //}
-  obs->state(state);
+  for (int i = 0; i < views.size(); i++) {
+    views[i]->state(state);
+  }
 }
 
 void SonoffRelay::attachObserver(RelayObserver *observer) {
-    //views.push_back(obs);
-    obs = observer;
+    views.push_back(obs);
 }
 
 void SonoffRelay::pokeRelay(int state, int channel) {
-  digitalWrite(SONOFF_RELAY_PINS[channel], state);
+  _currentState = state;
+  digitalWrite(SONOFF_RELAY_PINS[channel], _currentState);
   // announce new state
-  SonoffRelay::announce(state);
+  SonoffRelay::announce(_currentState);
 }
 
 void SonoffRelay::turnOn(int channel) {
@@ -47,5 +49,5 @@ void SonoffRelay::toggle(int channel) {
 
 
 int SonoffRelay::currentState(int channel) {
-  return digitalRead(SONOFF_RELAY_PINS[channel]);
+  return _currentState;
 }
