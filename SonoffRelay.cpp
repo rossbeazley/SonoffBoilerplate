@@ -1,8 +1,5 @@
-#include <Hash.h>
 
-#include <ArduinoOTA.h>
-
-#import "SonoffRelay.h"
+#include "SonoffRelay.h"
 
 SonoffRelay::SonoffRelay(int gpiopin) {
   _gpiopin = gpiopin;

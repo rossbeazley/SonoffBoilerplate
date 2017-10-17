@@ -1,7 +1,10 @@
+#pragma once
+
 class RelayObserver
 {
   public:
     virtual void state(int state) = 0;
+    //virtual ~RelayObserver (){}
 };
 
 
