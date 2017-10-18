@@ -56,6 +56,16 @@ You can send messages to `deviceId/channel-0` with the following parameters:
 - 'toggle' to toggle between on and off
 The status will come as a response on topic `deviceId/channel-0/status`
 
+### Running Tests
+To run the [unit tests](test/), open a terminal and navigate to the root project directory and execute the following:
+
+```bash
+$ mkdir build && cd build
+$ cmake ..
+$ make
+$ ctest .
+```
+
 ### More information
 Here are some posts I wrote on making all this work that you might find helpful
 
