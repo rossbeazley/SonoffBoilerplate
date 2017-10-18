@@ -5,6 +5,7 @@
 SonoffRelay::SonoffRelay(int gpiopin) {
   _gpiopin = gpiopin;
   _currentState=HIGH;
+  this->relayInit(gpiopin);
   this->pokeRelay(_currentState); 
 }
 

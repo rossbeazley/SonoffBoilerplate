@@ -401,7 +401,7 @@ void setup()
   //TODO multiple relays
   
   
-  relay.relayInit();
+  //relay.relayInit();
 
    //TODO this should move to last state maybe
    //TODO multi channel support
