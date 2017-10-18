@@ -6,7 +6,7 @@ class RelayObserver
 {
       public:
         virtual void state(int state) = 0;
-        virtual ~RelayObserver (){}
+        //virtual ~RelayObserver (){}
 };
 
 
@@ -20,7 +20,7 @@ class SonoffRelay
     void turnOff(int channel = 0);
     void toggle(int channel = 0);
     int currentState(int channel = 0);
-    void attachObserver(RelayObserver *observer);
+    void attachObserver(RelayObserver *);
     
   private:
     void pokeRelay(int state, int channel = 0);
