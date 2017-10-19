@@ -32,12 +32,11 @@ TEST_CASE("Relay pin mode set to OUTPUT", "[SonoffRelay]" ) {
 
 	SECTION("Announces state change") {
 		SonoffRelay relay{0};
-		
-		CapturingObserver c();
-
+		CapturingObserver c{};
 		relay.attachObserver(&c);
+		relay.turnOff();
 
-
+	REQUIRE( c.cState == LOW);
 	}
 
 }
