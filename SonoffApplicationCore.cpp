@@ -12,6 +12,9 @@ void SonoffApplicationCore::externalOn()
 }
 
 
-void SonoffApplicationCore::externalOff() {}
+void SonoffApplicationCore::externalOff() 
+{
+  this->relay->open();  
+}
 
 

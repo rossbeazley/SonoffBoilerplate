@@ -4,18 +4,21 @@
 #include <Arduino.h>
 #include "../SonoffApplicationCore.h"
 
+const int OPEN=1;
+const int CLOSED=2;
+
 class CapturingRelay : public Relay
 {
  public:
 	 int state = -1;
 	 void open()
 	 {
-		 this->state=1;
+		 this->state=OPEN;
 	 };
 
 	 void close()
 	 {
-		 this->state=2;
+		 this->state=CLOSED;
 	 };
 };
 
@@ -26,12 +29,18 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		SonoffApplicationCore app{&relay};
 		app.externalOn();
 
-		REQUIRE( relay.state==2 );
+		REQUIRE( relay.state==CLOSED );
 
 	}
 
 	SECTION("Turning off will open the relay") {
-	
+		CapturingRelay relay{};
+                SonoffApplicationCore app{&relay};
+	        app.externalOff();
+
+                REQUIRE( relay.state==OPEN );
+
+
 	}
 
 	SECTION("When the relay closes we tell the world we are ON") {
