@@ -87,3 +87,21 @@ Part 3 - Sonoff POW and S20 Smart Socket Introduction
 Part 4 - Sonoff S20 firmware replacement
 
 [Coming Soon]()
+
+
+
+
+
+Plan for delivery:
+use existing
+Wifi Managera
+MQT
+SONOFF button
+implement
+External Button
+Relay and GPIORelayImpl
+ApplicationCore
+
+
+
+
