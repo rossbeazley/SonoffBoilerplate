@@ -2,12 +2,16 @@
 
 SonoffApplicationCore::SonoffApplicationCore(Relay * relay)
 {
+  this->relay = relay;
   
 }
 
-void SonoffApplicationCore::on() {}
+void SonoffApplicationCore::externalOn() 
+{
+  this->relay->close();  
+}
 
 
-void SonoffApplicationCore::off() {}
+void SonoffApplicationCore::externalOff() {}
 
 

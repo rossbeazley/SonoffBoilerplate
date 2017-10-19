@@ -11,8 +11,10 @@ class SonoffApplicationCore
 {
   public:
     SonoffApplicationCore(Relay*); //think i can avoid pointers?
-    void on();
-    void off();
+    void externalOn();
+    void externalOff();
+  private:
+    Relay* relay;
     
   
 };
