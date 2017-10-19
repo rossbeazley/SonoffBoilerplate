@@ -24,12 +24,6 @@ TEST_CASE("Relay pin mode set to OUTPUT", "[SonoffRelay]" ) {
 	    REQUIRE( spyPinMode[12] == OUTPUT );
 	}
 
-	SECTION("Relay initial state") {
-		SonoffRelay relay{0};
-
-    	REQUIRE( spyPinState[12] == HIGH );
-	}
-
 	SECTION("Announces state change") {
 		SonoffRelay relay{0};
 		CapturingObserver c{};
