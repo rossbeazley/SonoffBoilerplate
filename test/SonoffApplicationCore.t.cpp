@@ -7,9 +7,14 @@
 const int OPEN=1;
 const int CLOSED=2;
 
+const int RON=1;
+const int ROFF=2;
+
 class CapturingRelay : public Relay
 {
  public:
+	 CapturingRelay() {};
+	 RelayObserver * obs;
 	 int state = -1;
 	 void open()
 	 {
@@ -19,6 +24,14 @@ class CapturingRelay : public Relay
 	 void close()
 	 {
 		 this->state=CLOSED;
+	 };
+	 void announceClose()
+	 {
+		 this->obs->CLOSED();
+	 };
+	 void addObserver(RelayObserver* obs)
+	 {
+		 this->obs = obs;
 	 };
 };
 
@@ -30,7 +43,6 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		app.externalOn();
 
 		REQUIRE( relay.state==CLOSED );
-
 	}
 
 	SECTION("Turning off will open the relay") {
@@ -39,12 +51,27 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 	        app.externalOff();
 
                 REQUIRE( relay.state==OPEN );
-
-
 	}
 
 	SECTION("When the relay closes we tell the world we are ON") {
+		class AppObserver : public SonoffApplicationCoreObserver
+		{
+			public:
+				int state = -1;
+				void ON() {
+					this->state=RON;
+				};
+		};
+		
+		AppObserver appObserver{};
+		
+		CapturingRelay relay{};
+		SonoffApplicationCore app{&relay};
+		app.addObserver(&appObserver);
 
+		relay.announceClose();
+
+		REQUIRE( appObserver.state==RON );
 	}
 
 	SECTION("When the relay opens we tell the world we are OFF") {
