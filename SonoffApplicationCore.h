@@ -33,6 +33,11 @@ class SonoffApplicationCore : public RelayObserver
     void externalOn();
     void externalOff();
     void addObserver(SonoffApplicationCoreObserver*);
+    //void toggleLight();
+    //void resetSettings();
+    //void restart();
+    
+  //RelayObserver
     void CLOSED();
     void OPEN();
   private:

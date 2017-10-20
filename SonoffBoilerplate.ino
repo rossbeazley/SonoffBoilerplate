@@ -36,6 +36,7 @@
  * *****************************************/
 #include <ESP8266WiFi.h>
 #include "SonoffRelay.h"
+//#include "SonoffApplicationCore.h"
 
 #ifdef INCLUDE_MQTT_SUPPORT
 #include <PubSubClient.h>        //https://github.com/Imroy/pubsubclient
@@ -103,6 +104,7 @@ int inputStateCount = 5;
 static long startPress = 0;
 
 SonoffRelay relay(12);
+//SonoffApplicationCore appCore(&relay);
 
 //http://stackoverflow.com/questions/9072320/split-string-into-string-array
 String getValue(String data, char separator, int index)
@@ -483,15 +485,7 @@ void loop()
         }
     }
     break;
-    case CMD_INPUT_CHANGE: {
-      if(inputStateCount--<=0) {
-        relay.toggle();
-        cmd = CMD_WAIT;
-      }
-      
-    }
-    break;
-
+  
   }
 
 
