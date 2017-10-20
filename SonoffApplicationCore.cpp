@@ -28,3 +28,8 @@ void SonoffApplicationCore::CLOSED()
   this->obs->ON();
 }
 
+void SonoffApplicationCore::OPEN()
+{
+  this->obs->OFF();
+}
+

@@ -4,6 +4,7 @@ class RelayObserver
 {
   public:
     virtual void CLOSED() = 0;
+    virtual void OPEN() = 0;
   
 };
 
@@ -21,6 +22,7 @@ class SonoffApplicationCoreObserver
 {
   public:
     virtual void ON() = 0;
+    virtual void OFF() = 0;
     
 };
 
@@ -32,6 +34,7 @@ class SonoffApplicationCore : public RelayObserver
     void externalOff();
     void addObserver(SonoffApplicationCoreObserver*);
     void CLOSED();
+    void OPEN();
   private:
     Relay* relay;
     SonoffApplicationCoreObserver* obs;
