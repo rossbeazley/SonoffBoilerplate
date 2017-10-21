@@ -23,7 +23,7 @@ GPIORelay::GPIORelay(int gpioPin)
 }
 
 void GPIORelay::open() {
-
+	this->obs->OPEN();
 };
 
 void GPIORelay::close() {
@@ -31,9 +31,25 @@ void GPIORelay::close() {
 };
 
 void GPIORelay::addObserver(RelayObserver* obs) {
-
+	this->obs=obs;
 }
 
+class CapturingRelayObserver : public RelayObserver
+{
+	public:
+		void OPEN()
+		{ this->state = sOPEN;
+		};
+		void CLOSED()
+		{ this->state = sCLOSED;
+		};
+		static int sOPEN;
+		static int sCLOSED;
+		int state=-1;
+};
+
+int CapturingRelayObserver::sOPEN=1;
+int CapturingRelayObserver::sCLOSED=1;
 
 
 TEST_CASE("GPIO Relay opens and closes", "[GPIORelay]" ) {
@@ -43,13 +59,22 @@ TEST_CASE("GPIO Relay opens and closes", "[GPIORelay]" ) {
 	}
 			
 	SECTION("Relay setup") { 
-		GPIORelay relay{12};
+		const int pinno=12;
 
-	REQUIRE( spyPinMode[12] == OUTPUT );
+		GPIORelay relay{pinno};
+
+	REQUIRE( spyPinMode[pinno] == OUTPUT );
     	}
 
-	SECTION("Announces state change") {
-											//REQUIRE( c.cState == LOW);
+	SECTION("Opening announces state change") {
+			
+		CapturingRelayObserver capturingObserver{};
+
+		const int pinno=12;
+		GPIORelay relay{pinno};
+		relay.addObserver(&capturingObserver);
+		relay.open();
+		REQUIRE( capturingObserver.state == CapturingRelayObserver::sOPEN);
 											}
 
 }
