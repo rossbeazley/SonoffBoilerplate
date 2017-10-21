@@ -27,7 +27,7 @@ void GPIORelay::open() {
 };
 
 void GPIORelay::close() {
-
+	this->obs->CLOSED();
 };
 
 void GPIORelay::addObserver(RelayObserver* obs) {
@@ -48,6 +48,7 @@ class CapturingRelayObserver : public RelayObserver
 		int state=-1;
 };
 
+//Ask about declare and init of static member variables (or const)
 int CapturingRelayObserver::sOPEN=1;
 int CapturingRelayObserver::sCLOSED=1;
 
@@ -75,6 +76,17 @@ TEST_CASE("GPIO Relay opens and closes", "[GPIORelay]" ) {
 		relay.addObserver(&capturingObserver);
 		relay.open();
 		REQUIRE( capturingObserver.state == CapturingRelayObserver::sOPEN);
+											}
+
+	SECTION("Closeing announces state change") {
+			
+		CapturingRelayObserver capturingObserver{};
+
+		const int pinno=12;
+		GPIORelay relay{pinno};
+		relay.addObserver(&capturingObserver);
+		relay.close();
+		REQUIRE( capturingObserver.state == CapturingRelayObserver::sCLOSED);
 											}
 
 }
