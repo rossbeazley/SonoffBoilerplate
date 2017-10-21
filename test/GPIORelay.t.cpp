@@ -2,39 +2,7 @@
 #include "catch.hpp"
 
 #include <Arduino.h>
-#include "../SonoffApplicationCore.h"
-
-class GPIORelay : public Relay
-{
- public:
-	 GPIORelay(int gpioPin);
-	 void open();
-	 void close();
-	 void addObserver(RelayObserver*);
- private:
-	 RelayObserver* obs;
-	 int gpioPin;
-};
-
-GPIORelay::GPIORelay(int gpioPin)
-{
-	this->gpioPin = gpioPin;
-	pinMode(gpioPin, OUTPUT);
-}
-
-void GPIORelay::open() {
-	digitalWrite(this->gpioPin,LOW);
-	this->obs->OPEN();
-};
-
-void GPIORelay::close() {
-	digitalWrite(this->gpioPin,HIGH);
-	this->obs->CLOSED();
-};
-
-void GPIORelay::addObserver(RelayObserver* obs) {
-	this->obs=obs;
-}
+#include "../GPIORelay.h"
 
 class CapturingRelayObserver : public RelayObserver
 {
