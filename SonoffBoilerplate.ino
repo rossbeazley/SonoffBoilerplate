@@ -35,8 +35,12 @@
    Should not need to edit below this line *
  * *****************************************/
 #include <ESP8266WiFi.h>
-#include "SonoffRelay.h"
-//#include "SonoffApplicationCore.h"
+
+
+
+#include "SonoffApplicationCore.h"
+#include "GPIORelay.h"
+
 
 #ifdef INCLUDE_MQTT_SUPPORT
 #include <PubSubClient.h>        //https://github.com/Imroy/pubsubclient
@@ -103,8 +107,9 @@ int inputStateCount = 5;
 
 static long startPress = 0;
 
-SonoffRelay relay(12);
-//SonoffApplicationCore appCore(&relay);
+//SonoffRelay relay(12);
+GPIORelay gpioRelay(12);
+SonoffApplicationCore appCore(&gpioRelay);
 
 //http://stackoverflow.com/questions/9072320/split-string-into-string-array
 String getValue(String data, char separator, int index)
@@ -147,7 +152,7 @@ void updateBlynk(int channel) {
 
 void updateMQTT(int channel) {
 #ifdef INCLUDE_MQTT_SUPPORT
-  int state = relay.currentState(channel);
+  int state = 0;//relay.currentState(channel); //THIS WHOLE FUNCTION TO BE REPLACED WTH OBSERVER PATTERN
   char topic[50];
   sprintf(topic, "%s/channel-%d/status", settings.mqttTopic, channel);
   String stateString = state == 0 ? "off" : "on";
@@ -160,10 +165,13 @@ void updateMQTT(int channel) {
 
 //THE NEEDS IMPLEMENTING, MAYBE THROUGH OBSERVER OF RELAY
 void setState(int pstate, int channel) {
-
+// REPLACE WITH OBSERVER of appCore
+//eg appCore.addObserver( &mqttOutbound )
+// responsible for adapting the on off to agreed mqtt seruakusatuib
   //MQTT
-  int state = relay.currentState(channel);
-  mqttOutbound->updateMQTT(channel,state);
+//  int state = relay.currentState(channel);
+//  mqttOutbound->updateMQTT(channel,state);
+
 
 }
 
@@ -245,13 +253,13 @@ void mqttCallback(const MQTT::Publish& pub) {
       int channel = channelString.toInt();
       Serial.println(channel);
       if (payload == "on") {
-        relay.turnOn();
+        appCore.externalOn();
       }
       if (payload == "off") {
-        relay.turnOff();
+        appCore.externalOff();
       }
       if (payload == "toggle") {
-        relay.toggle();
+        appCore.externalToggle();
       }
       if(payload == "") {
         updateMQTT(channel);
@@ -408,9 +416,9 @@ void setup()
    //TODO this should move to last state maybe
    //TODO multi channel support
   if (strcmp(settings.bootState, "on") == 0) {
-    relay.turnOn();
+    appCore.externalOn();
   } else {
-    relay.turnOff();
+    appCore.externalOff();
   }
 
   //setup led
@@ -470,7 +478,7 @@ void loop()
             long duration = millis() - startPress;
             if (duration < 1000) {
               Serial.println("short press - toggle relay");
-              relay.toggle();
+              appCore.externalToggle();
             } else if (duration < 5000) {
               Serial.println("medium press - reset");
               restart();

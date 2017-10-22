@@ -16,15 +16,7 @@ class CapturingRelay : public Relay
 	 CapturingRelay() {};
 	 RelayObserver * obs;
 	 int state = -1;
-	 void open()
-	 {
-		 this->state=OPEN;
-	 };
-
-	 void close()
-	 {
-		 this->state=CLOSED;
-	 };
+	 
 	 void announceClose()
 	 {
 		 this->obs->CLOSED();
@@ -33,9 +25,23 @@ class CapturingRelay : public Relay
 	 {
 		 this->obs->OPEN();
 	 };
+
 	 void addObserver(RelayObserver* obs)
 	 {
 		 this->obs = obs;
+	 };
+
+
+	 void open()
+	 {
+		 this->state=OPEN;
+		 this->announceOpen();
+	 };
+
+	 void close()
+	 {
+		 this->state=CLOSED;
+		 this->announceClose();
 	 };
 };
 
@@ -93,4 +99,30 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 
 		REQUIRE( appObserver.state==ROFF );
         }
+
+	SECTION("Toggelling when off will turn on") {
+
+		AppObserver appObserver{};
+		
+		CapturingRelay relay{};
+		SonoffApplicationCore app{&relay};
+		app.addObserver(&appObserver);
+		app.externalOff();
+		app.externalToggle();
+
+		REQUIRE( appObserver.state==RON );
+	}
+
+	SECTION("Toggelling when on will turn on") {
+
+		AppObserver appObserver{};
+		
+		CapturingRelay relay{};
+		SonoffApplicationCore app{&relay};
+		app.addObserver(&appObserver);
+		app.externalOn();
+		app.externalToggle();
+		REQUIRE( appObserver.state==ROFF );
+	}
+
 }
