@@ -1,3 +1,4 @@
+#pragma once
 #include "SonoffApplicationCore.h"
 #include <Arduino.h>
 

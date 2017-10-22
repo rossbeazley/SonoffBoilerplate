@@ -25,7 +25,7 @@
 //S20 Smart Socket works better with it false
 #define SONOFF_LED_RELAY_STATE      false
 
-#define HOSTNAME "sonoff"
+#define HOSTNAME "dev"
 
 //comment out to completly disable respective technology
 #define INCLUDE_MQTT_SUPPORT
@@ -48,9 +48,12 @@
 WiFiClient wclient;
 PubSubClient mqttClient(wclient);
 
+#include "MQTTInbound.h"
+MQTTInbound * mqttInbound = nullptr;
+
 
 static bool MQTT_ENABLED              = true;
-int         lastMQTTConnectionAttempt = 0;
+
 #endif
 
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager
@@ -71,9 +74,9 @@ typedef struct {
 #define EEPROM_SALT 12661
 typedef struct {
   char  bootState[4]      = "on";
-  char  mqttHostname[33]  = "tzapu.com";
+  char  mqttHostname[33]  = "192.168.10.2";
   char  mqttPort[6]       = "1883";
-  char  mqttClientID[24]  = "spk-socket";
+  char  mqttClientID[24]  = "";
   char  mqttTopic[33]     = HOSTNAME;
   int   salt              = EEPROM_SALT;
 } WMSettings;
@@ -110,24 +113,6 @@ static long startPress = 0;
 //SonoffRelay relay(12);
 GPIORelay gpioRelay(12);
 SonoffApplicationCore appCore(&gpioRelay);
-
-//http://stackoverflow.com/questions/9072320/split-string-into-string-array
-String getValue(String data, char separator, int index)
-{
-  int found = 0;
-  int strIndex[] = {0, -1};
-  int maxIndex = data.length()-1;
-
-  for(int i=0; i<=maxIndex && found<=index; i++){
-    if(data.charAt(i)==separator || i==maxIndex){
-        found++;
-        strIndex[0] = strIndex[1]+1;
-        strIndex[1] = (i == maxIndex) ? i+1 : i;
-    }
-  }
-
-  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
-}
 
 void tick()
 {
@@ -217,60 +202,6 @@ void reset() {
   delay(1000);
 }
 
-
-#ifdef INCLUDE_MQTT_SUPPORT
-void mqttCallback(const MQTT::Publish& pub) {
-  Serial.print(pub.topic());
-  Serial.print(" => ");
-  if (pub.has_stream()) {
-    int BUFFER_SIZE = 100;
-    uint8_t buf[BUFFER_SIZE];
-    int read;
-    while (read = pub.payload_stream()->read(buf, BUFFER_SIZE)) {
-      Serial.write(buf, read);
-    }
-    pub.payload_stream()->stop();
-    Serial.println("had buffer");
-  } else {
-    Serial.println(pub.payload_string());
-    String topic = pub.topic();
-    String payload = pub.payload_string();
-    
-    if (topic == settings.mqttTopic) {
-      Serial.println("exact match");
-      return;
-    }
-    
-    if (topic.startsWith(settings.mqttTopic)) {
-      Serial.println("for this device");
-      topic = topic.substring(strlen(settings.mqttTopic) + 1);
-      String channelString = getValue(topic, '/', 0);
-      if(!channelString.startsWith("channel-")) {
-        Serial.println("no channel");
-        return;
-      }
-      channelString.replace("channel-", "");
-      int channel = channelString.toInt();
-      Serial.println(channel);
-      if (payload == "on") {
-        appCore.externalOn();
-      }
-      if (payload == "off") {
-        appCore.externalOff();
-      }
-      if (payload == "toggle") {
-        appCore.externalToggle();
-      }
-      if(payload == "") {
-        updateMQTT(channel);
-      }
-      
-    }
-  }
-}
-    
-#endif
-
 void setup()
 {
   Serial.begin(115200);
@@ -301,8 +232,11 @@ void setup()
     settings = defaults;
   }
 
-  MQTTOutbound mob(mqttClient,settings.mqttTopic);
+  MQTTOutbound mob(&mqttClient,settings.mqttTopic);
   mqttOutbound = &mob;
+
+  MQTTInbound inbound(&mqttClient,settings.mqttClientID,settings.mqttTopic, &appCore);
+  mqttInbound = &inbound;
 
   WiFiManagerParameter custom_boot_state("boot-state", "on/off on boot", settings.bootState, 33);
   wifiManager.addParameter(&custom_boot_state);
@@ -441,24 +375,7 @@ void loop()
   //mqtt loop
   if (MQTT_ENABLED) {
     if (!mqttClient.connected()) {
-      if(lastMQTTConnectionAttempt == 0 || millis() > lastMQTTConnectionAttempt + 3 * 60 * 1000) {
-        lastMQTTConnectionAttempt = millis();
-        Serial.println(millis());
-        Serial.println("Trying to connect to mqtt");
-        if (mqttClient.connect(settings.mqttClientID)) {
-          mqttClient.set_callback(mqttCallback);
-          char topic[50];
-          //sprintf(topic, "%s/+/+", settings.mqttTopic);
-          //mqttClient.subscribe(topic);
-          sprintf(topic, "%s/+", settings.mqttTopic);
-          mqttClient.subscribe(topic);
-
-          //TODO multiple relays
-          updateMQTT(0);
-        } else {
-          Serial.println("failed");
-        }
-      }
+      mqttInbound->connectToMQTT();
     } else {
       mqttClient.loop();
     }
