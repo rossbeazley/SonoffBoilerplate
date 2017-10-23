@@ -131,35 +131,6 @@ void configModeCallback (WiFiManager *myWiFiManager) {
   ticker.attach(0.2, tick);
 }
 
-void updateBlynk(int channel) {
-
-}
-
-void updateMQTT(int channel) {
-#ifdef INCLUDE_MQTT_SUPPORT
-  int state = 0;//relay.currentState(channel); //THIS WHOLE FUNCTION TO BE REPLACED WTH OBSERVER PATTERN
-  char topic[50];
-  sprintf(topic, "%s/channel-%d/status", settings.mqttTopic, channel);
-  String stateString = state == 0 ? "off" : "on";
-  if ( channel >= SONOFF_AVAILABLE_CHANNELS) {
-    stateString = "disabled";
-  }
-  mqttClient.publish(topic, stateString);
-#endif
-}
-
-//THE NEEDS IMPLEMENTING, MAYBE THROUGH OBSERVER OF RELAY
-void setState(int pstate, int channel) {
-// REPLACE WITH OBSERVER of appCore
-//eg appCore.addObserver( &mqttOutbound )
-// responsible for adapting the on off to agreed mqtt seruakusatuib
-  //MQTT
-//  int state = relay.currentState(channel);
-//  mqttOutbound->updateMQTT(channel,state);
-
-
-}
-
 
 void toggleState() {
   cmd = CMD_BUTTON_CHANGE;
@@ -232,19 +203,12 @@ void setup()
     settings = defaults;
   }
 
-  MQTTOutbound mob(&mqttClient,settings.mqttTopic);
-  mqttOutbound = &mob;
-
-  MQTTInbound inbound(&mqttClient,settings.mqttClientID,settings.mqttTopic, &appCore);
-  mqttInbound = &inbound;
 
   WiFiManagerParameter custom_boot_state("boot-state", "on/off on boot", settings.bootState, 33);
   wifiManager.addParameter(&custom_boot_state);
 
 
   Serial.println(settings.bootState);
-
-#ifdef INCLUDE_MQTT_SUPPORT
   Serial.println(settings.mqttHostname);
   Serial.println(settings.mqttPort);
   Serial.println(settings.mqttClientID);
@@ -264,7 +228,6 @@ void setup()
 
   WiFiManagerParameter custom_mqtt_topic("mqtt-topic", "Topic", settings.mqttTopic, 33);
   wifiManager.addParameter(&custom_mqtt_topic);
-#endif
 
   //set config save notify callback
   wifiManager.setSaveConfigCallback(saveConfigCallback);
@@ -297,8 +260,6 @@ void setup()
     EEPROM.end();
   }
 
-
-#ifdef INCLUDE_MQTT_SUPPORT
   //config mqtt
   if (strlen(settings.mqttHostname) == 0) {
     MQTT_ENABLED = false;
@@ -306,7 +267,6 @@ void setup()
   if (MQTT_ENABLED) {
     mqttClient.set_server(settings.mqttHostname, atoi(settings.mqttPort));
   }
-#endif
 
   //OTA
   ArduinoOTA.onStart([]() {
@@ -346,6 +306,12 @@ void setup()
   
   
   //relay.relayInit();
+  
+  MQTTOutbound mob(&mqttClient,settings.mqttTopic);
+  mqttOutbound = &mob;
+
+  MQTTInbound inbound(&mqttClient,settings.mqttClientID,settings.mqttTopic, &appCore);
+  mqttInbound = &inbound;
 
    //TODO this should move to last state maybe
    //TODO multi channel support
