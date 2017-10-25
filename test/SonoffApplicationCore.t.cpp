@@ -125,4 +125,12 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		REQUIRE( appObserver.state==ROFF );
 	}
 
+	SECTION("Constructing app core with true makes relay closed") {
+		CapturingRelay relay{};
+                SonoffApplicationCore app{&relay, (strcmp("on", "on") == 0)};
+
+                REQUIRE( relay.state==CLOSED );
+
+	}
+
 }

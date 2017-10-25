@@ -1,9 +1,13 @@
 #include "SonoffApplicationCore.h"
 
-SonoffApplicationCore::SonoffApplicationCore(Relay * relay)
+SonoffApplicationCore::SonoffApplicationCore(Relay * relay,bool initialStateOnIsTrue)
 {
   this->relay = relay;
   this->relay->addObserver(this);
+  if(initialStateOnIsTrue)
+  {
+    relay->close();
+  }
   
 }
 
