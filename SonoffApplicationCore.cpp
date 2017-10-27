@@ -1,4 +1,5 @@
 #include "SonoffApplicationCore.h"
+#include <Arduino.h>
 
 SonoffApplicationCore::SonoffApplicationCore(Relay * relay,bool initialStateOnIsTrue)
 {
@@ -9,6 +10,11 @@ SonoffApplicationCore::SonoffApplicationCore(Relay * relay,bool initialStateOnIs
     relay->close();
   }
   
+}
+
+SonoffApplicationCore::~SonoffApplicationCore()
+{
+  Serial.println("Desctructed SonoffApplicationCore::SonoffApplicationCore");
 }
 
 void SonoffApplicationCore::externalOn() 
@@ -58,4 +64,5 @@ void SonoffApplicationCore::OPEN()
   this->obs->OFF();
   }
 }
+
 

@@ -2,9 +2,9 @@
 
 
 #define HOSTNAME "dev"
-#define EEPROM_SALT 12661
+#define EEPROM_SALT 12663
 typedef struct {
-  char  bootState[4]      = "on";
+  char  bootState[4]      = "off";
   char  mqttHostname[33]  = "192.168.10.2";
   char  mqttPort[6]       = "1883";
   char  mqttClientID[24]  = "";
@@ -17,16 +17,18 @@ class EEPROMSettings
 {
   public:
     EEPROMSettings();
+    ~EEPROMSettings();
     void save(WMSettings);
     WMSettings load();
     void debugDump();
     
     char* mqttTopic();
-    char*  bootState();
+    bool  bootState();
     char* mqttHostname();
     char*  mqttPort();
     char* mqttClientID();
   private:
-      WMSettings * settings;
+      WMSettings settings;
 };
+
 

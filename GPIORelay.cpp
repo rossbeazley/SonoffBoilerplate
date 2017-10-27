@@ -2,8 +2,15 @@
 
 GPIORelay::GPIORelay(int gpioPin)
 {
+  Serial.println("Constructing GPIORelay");
 	this->gpioPin = gpioPin;
 	pinMode(gpioPin, OUTPUT);
+  Serial.println("Constructed GPIORelay");
+}
+
+GPIORelay::~GPIORelay()
+{
+  Serial.println("GPIORELAY DESTRUCT");
 }
 
 void GPIORelay::open() {
@@ -19,5 +26,6 @@ void GPIORelay::close() {
 void GPIORelay::addObserver(RelayObserver* obs) {
 	this->obs=obs;
 }
+
 
 

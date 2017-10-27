@@ -30,6 +30,7 @@ class SonoffApplicationCore : public RelayObserver
 {
   public:
     SonoffApplicationCore(Relay*,bool = false); //think i can avoid pointers?
+    ~SonoffApplicationCore();
     void externalOn();
     void externalOff();
     void externalToggle();
@@ -43,9 +44,10 @@ class SonoffApplicationCore : public RelayObserver
     void OPEN();
   private:
     Relay* relay;
-    SonoffApplicationCoreObserver* obs;
+    SonoffApplicationCoreObserver* obs = nullptr;
     bool on;
     
   
 };
+
 

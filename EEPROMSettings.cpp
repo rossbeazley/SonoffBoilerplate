@@ -5,19 +5,27 @@
 
 EEPROMSettings::EEPROMSettings()
 {
-  this->settings;
+  Serial.println("constructing EEPROMSettings");
   //custom params
   EEPROM.begin(512);
   EEPROM.get(0, this->settings);
   EEPROM.end();
 
+  Serial.println("validating EEPROMSettings");
   
-  if (this->settings->salt != EEPROM_SALT) {
+  if (settings.salt != EEPROM_SALT) {
     Serial.println("Invalid settings in EEPROM, trying with defaults");
     WMSettings defaults;
-    this->settings = &defaults;
+    this->settings = defaults;
   }
   
+  Serial.println("constructed EEPROMSettings");
+}
+
+
+EEPROMSettings::~EEPROMSettings()
+{
+  Serial.println("destructed EEPROMSettings");
 }
 
 void EEPROMSettings::save(WMSettings settings)
@@ -30,37 +38,38 @@ void EEPROMSettings::save(WMSettings settings)
 void EEPROMSettings::debugDump()
 {
   
-  Serial.println(this->settings->bootState);
-  Serial.println(this->settings->mqttHostname);
-  Serial.println(this->settings->mqttPort);
-  Serial.println(this->settings->mqttClientID);
-  Serial.println(this->settings->mqttTopic);
+  Serial.println(settings.bootState);
+  Serial.println(this->settings.mqttHostname);
+  Serial.println(this->settings.mqttPort);
+  Serial.println(this->settings.mqttClientID);
+  Serial.println(this->settings.mqttTopic);
 }
 
 char* EEPROMSettings::mqttTopic()
 {
-  return this->settings->mqttTopic;
+  return this->settings.mqttTopic;
 }
 
-char*  EEPROMSettings::bootState()
+bool  EEPROMSettings::bootState()
 {
-  return this->settings->bootState;
+  return (strcmp(this->settings.bootState , "on") == 0);
 }
 
 char*  EEPROMSettings::mqttHostname()
 {
-  return this->settings->mqttHostname;
+  return this->settings.mqttHostname;
 }
 
 char*  EEPROMSettings::mqttPort()
 {
-  return this->settings->mqttPort;
+  return this->settings.mqttPort;
 }
 
 char*  EEPROMSettings::mqttClientID()
 {
-  return this->settings->mqttClientID;
+  return this->settings.mqttClientID;
 }
+
 
 
 

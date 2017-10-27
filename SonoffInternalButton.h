@@ -5,9 +5,11 @@
 class SonoffInternalButton
 {
   public:
-    SonoffInternalButton(SonoffApplicationCore *);
+    SonoffInternalButton(SonoffApplicationCore*);
+    ~SonoffInternalButton();
     void loop();
   private:
     SonoffApplicationCore * core;
 };
+
 

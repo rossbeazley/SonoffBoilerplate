@@ -40,6 +40,9 @@ void saveConfigCallback () {
 
 SonoffWifi::SonoffWifi(EEPROMSettings & sonoffSettings)
 {
+
+Serial.println("Constructing wifi");
+  
     const char *hostname = sonoffSettings.mqttTopic();
   //set led pin as output
 
@@ -57,7 +60,7 @@ ticker.attach(0.6, tick);
   wifiManager.setConfigPortalTimeout(180);
 
 
-  WiFiManagerParameter custom_boot_state("boot-state", "on/off on boot", sonoffSettings.bootState(), 33);
+  WiFiManagerParameter custom_boot_state("boot-state", "on/off on boot", sonoffSettings.bootState()?"on":"off", 33);
   wifiManager.addParameter(&custom_boot_state);
 
   sonoffSettings.debugDump();
@@ -79,6 +82,9 @@ ticker.attach(0.6, tick);
 
   //set config save notify callback
   wifiManager.setSaveConfigCallback(saveConfigCallback);
+
+
+Serial.println("Wifi about to connect");
 
   if (!wifiManager.autoConnect(hostname)) {
     Serial.println("failed to connect and hit timeout");
@@ -107,5 +113,8 @@ ticker.attach(0.6, tick);
 
   ticker.detach();
 
+
+Serial.println("Constructed wifi");
 }
+
 

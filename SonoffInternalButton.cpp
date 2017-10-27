@@ -19,6 +19,8 @@ int inputStateCount = 5;
 static long startPress = 0;
 
 void toggleState() {
+  
+  Serial.println("SonoffInternalButton::toggleState");
   cmd = CMD_BUTTON_CHANGE;
 }
 
@@ -41,24 +43,54 @@ SonoffInternalButton::SonoffInternalButton(SonoffApplicationCore * core) : core{
 
 //setup button
   pinMode(SONOFF_BUTTON, INPUT);
-  attachInterrupt(SONOFF_BUTTON, toggleState, CHANGE);
+  attachInterrupt(SONOFF_BUTTON, toggleState, CHANGE);  
+}
 
-  
+SonoffInternalButton::~SonoffInternalButton()
+{
+  Serial.println("Deconstruct SonoffInternalButton");
 }
 
 void SonoffInternalButton::loop()
 {
+  //Serial.println("SonoffInternalButton::loop");
   switch (cmd) {
     case CMD_WAIT:
+      //Serial.println("WAIT");
       break;
     case CMD_BUTTON_CHANGE: 
     {
+      //Serial.println("CMD_BUTTON_CHANGE");
         int currentState = digitalRead(SONOFF_BUTTON);
+          Serial.print("current state (HIGH IS ");
+          Serial.print(HIGH);
+          Serial.print(") ");
+          Serial.println(currentState);
+        
+          Serial.print("button state ");
+          Serial.println(buttonState);
+        
         if (currentState != buttonState) {
           if (buttonState == LOW && currentState == HIGH) {
+            Serial.print("if buttonState == LOW && currentState == HIGH");
             long duration = millis() - startPress;
-            if (duration < 1000) {
+            Serial.print("duration ");
+            Serial.println(duration);
+            
+            if (duration < 2000) {
               Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.println("short press - toggle relay");
+              Serial.print("Core mem location ");
+              Serial.println((long int)&core);
+  
               this->core->externalToggle();
             } else if (duration < 5000) {
               Serial.println("medium press - reset");
@@ -68,13 +100,24 @@ void SonoffInternalButton::loop()
               reset();
             }
           } else if (buttonState == HIGH && currentState == LOW) {
+            Serial.println("else if (buttonState == HIGH && currentState == LOW)");
             startPress = millis();
+            Serial.print("Start of press at ");
+            Serial.println(startPress);
+          } else {
+            Serial.println("else none");
           }
           buttonState = currentState;
+          Serial.print("button state ");
+          Serial.println(buttonState);
         }
     }
     break;
   
   }
+
+  //Serial.println("SonoffInternalButton::loop");
+  
 }
+
 

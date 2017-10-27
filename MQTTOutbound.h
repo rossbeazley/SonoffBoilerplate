@@ -1,14 +1,17 @@
 #pragma once
 
+#include <ESP8266WiFi.h>
 #include <PubSubClient.h> 
 
 class MQTTOutbound
 {
   public:
-     MQTTOutbound(PubSubClient * psC, char *mqttTopic);
+     MQTTOutbound(char *mqttTopic);
      void updateMQTT(int channel = 0, int state = 0);
   private:
-    PubSubClient * _mqttClient;
+    WiFiClient wificlient;
+    PubSubClient _mqttClient{wificlient};
     const char * _mqttTopic;
 };
  
+
