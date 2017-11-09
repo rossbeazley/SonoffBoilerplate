@@ -6,7 +6,7 @@
 static bool MQTT_ENABLED              = true;
 
 #include "SonoffApplicationShell.h"
-SonoffApplicationShell appShell{};// = nullptr;
+SonoffApplicationShell * appShell = nullptr;
 
 void setup()
 {
@@ -16,6 +16,7 @@ void setup()
 
   delay(1000);
 
+  
 
 //  //config mqtt
 //  if (strlen(sonoffSettings.mqttHostname()) == 0) {
@@ -30,13 +31,12 @@ void setup()
 ////  pinMode(SONOFF_INPUT, INPUT_PULLUP);
 ////  attachInterrupt(SONOFF_INPUT, toggleInputState, CHANGE);
 //
-
-
-
+  
+  appShell = new SonoffApplicationShell{};
 
   Serial.println("done setup");
 
-  appShell.debugDump();
+  //appShell.debugDump();
 }
 
 
@@ -44,7 +44,7 @@ void loop()
 {
   
   //Serial.println("loop");
-  appShell.loop();
+  appShell->loop();
   
   //mqtt loop
 //  if (MQTT_ENABLED) {

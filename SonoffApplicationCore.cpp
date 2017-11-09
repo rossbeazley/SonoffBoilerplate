@@ -12,11 +12,6 @@ SonoffApplicationCore::SonoffApplicationCore(Relay * relay,bool initialStateOnIs
   
 }
 
-SonoffApplicationCore::~SonoffApplicationCore()
-{
-  Serial.println("Desctructed SonoffApplicationCore::SonoffApplicationCore");
-}
-
 void SonoffApplicationCore::externalOn() 
 {
   this->relay->close();  

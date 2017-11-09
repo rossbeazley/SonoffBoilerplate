@@ -16,7 +16,6 @@ class SonoffApplicationShell
 {
   public:
     SonoffApplicationShell();
-    ~SonoffApplicationShell();
     void loop();
     void debugDump();
   private:

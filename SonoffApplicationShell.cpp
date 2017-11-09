@@ -21,11 +21,6 @@ SonoffApplicationShell::SonoffApplicationShell()
   Serial.println("Constructed app shell");
 }
 
-SonoffApplicationShell::~SonoffApplicationShell()
-{
-  Serial.println("Destruct sonoffAppShell");
-}
-
 void SonoffApplicationShell::loop()
 {
   // loop MQTT

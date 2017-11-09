@@ -22,12 +22,6 @@ EEPROMSettings::EEPROMSettings()
   Serial.println("constructed EEPROMSettings");
 }
 
-
-EEPROMSettings::~EEPROMSettings()
-{
-  Serial.println("destructed EEPROMSettings");
-}
-
 void EEPROMSettings::save(WMSettings settings)
 {
     EEPROM.begin(512);

@@ -17,7 +17,6 @@ class EEPROMSettings
 {
   public:
     EEPROMSettings();
-    ~EEPROMSettings();
     void save(WMSettings);
     WMSettings load();
     void debugDump();

@@ -6,8 +6,7 @@ class GPIORelay : public Relay
 {
  public:
 	 GPIORelay(int gpioPin);
-   ~GPIORelay();
-	 void open();
+   void open();
 	 void close();
 	 void addObserver(RelayObserver*);
  private:
