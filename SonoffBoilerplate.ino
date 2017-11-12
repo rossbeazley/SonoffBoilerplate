@@ -25,12 +25,6 @@ void setup()
 //  if (MQTT_ENABLED) {
 //    mqttClient.set_server(sonoffSettings.mqttHostname(), atoi(sonoffSettings.mqttPort()));
 //  }
-//
-//// setup external button
-////  #define   SONOFF_INPUT              14
-////  pinMode(SONOFF_INPUT, INPUT_PULLUP);
-////  attachInterrupt(SONOFF_INPUT, toggleInputState, CHANGE);
-//
   
   appShell = new SonoffApplicationShell{};
 
@@ -54,9 +48,6 @@ void loop()
 //      mqttClient.loop();
 //    }
 //  }
-//  
-//  internalButton->loop();
-
 }
 
 

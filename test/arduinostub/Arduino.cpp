@@ -1,6 +1,23 @@
 #include "Arduino.h"
 #include <iostream>
 
+
+unsigned long millis(void)
+{
+	return mockTimeMillis;
+}
+
+
+void attachInterrupt(uint8_t pin, void (*fp)(void), int mode)
+{
+	spyISRs[pin]=fp;
+}
+
+void detachInterrupt(uint8_t pin)
+{
+	spyISRs[pin]=NULL;
+}
+
 void pinMode(int pin, int mode) {
 	std::cout << "pinMode(" << pin << ", " << mode << ")" << std::endl;
 	spyPinMode[pin] = mode;
@@ -27,3 +44,8 @@ void MockStream::println(int value) {
 MockStream Serial;
 std::map<int, int> spyPinState;
 std::map<int, int> spyPinMode;
+
+std::map<int, void (*)(void)> spyISRs;
+
+unsigned long mockTimeMillis=0;
+
