@@ -26,7 +26,15 @@ class SonoffApplicationCoreObserver
     
 };
 
-class SonoffApplicationCore : public RelayObserver
+class LightSwitch
+{
+  public:
+    virtual void externalOn() = 0;
+    virtual void externalOff() = 0;
+    virtual void externalToggle() = 0;
+};
+
+class SonoffApplicationCore : public RelayObserver, public LightSwitch
 {
   public:
     SonoffApplicationCore(Relay*,bool = false); //think i can avoid pointers?

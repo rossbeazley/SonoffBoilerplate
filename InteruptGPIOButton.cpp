@@ -4,14 +4,25 @@
 
 std::function<void(void)> InteruptGPIOButtonISRLambda;
 
-void edge()
+void InteruptGPIOButtonISR()
 {
 	InteruptGPIOButtonISRLambda();
 }
 
 InteruptGPIOButton::InteruptGPIOButton(AbstractButton & ab) : button{ab}
 {
-	InteruptGPIOButtonISRLambda = [this]()->void{ this->button.on(); };
+	InteruptGPIOButtonISRLambda = [this]()->void{ 
+	    if(digitalRead(14))
+     {
+      this->button.high(); 
+     }
+     else
+     {
+      this->button.low();
+     }
+	    
+       
+	  };
 	pinMode(14,INPUT);
-	attachInterrupt(14,edge,CHANGE);
+	attachInterrupt(14,InteruptGPIOButtonISR,CHANGE);
 }

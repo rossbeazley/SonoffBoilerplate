@@ -3,8 +3,8 @@
 class AbstractButton
 {
 	public:
-		virtual void on() = 0;
-		virtual void off() = 0;
+		virtual void high() = 0;
+		virtual void low() = 0;
 };
 
 class InteruptGPIOButton

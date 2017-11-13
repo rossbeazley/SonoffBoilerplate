@@ -9,11 +9,11 @@ class CapturingButton : public AbstractButton
 	public:
 		int state = 0;
 		CapturingButton() { };
-		void on()
+		void high()
 		{
 			state=1;
 		};
-		void off()
+		void low()
 		{
 			state=2;
 		};
