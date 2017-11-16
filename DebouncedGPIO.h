@@ -11,7 +11,9 @@ class DebouncedGPIO : public AbstractButton
     void loop(unsigned long uptime);
   private:
     LightSwitch & lightSwitch;
-    unsigned long interactionTime;
+    unsigned long lastInteractionTime;
+    int lastSignal;
+    int lastState;
     
 };
 
