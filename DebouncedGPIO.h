@@ -8,6 +8,7 @@ class DebouncedGPIO : public AbstractButton
     DebouncedGPIO(LightSwitch&);
     void high();
     void low();
+    void loop();
   private:
     LightSwitch & lightSwitch;
     

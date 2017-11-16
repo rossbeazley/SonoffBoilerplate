@@ -17,6 +17,10 @@ class CapturingButton : public AbstractButton
 		{
 			state=2;
 		};
+		void loop()
+		{
+			//UNUSED, i already know this method shouldnt be here
+		};
 
 };
 

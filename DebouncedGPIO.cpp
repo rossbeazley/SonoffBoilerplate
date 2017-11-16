@@ -7,11 +7,16 @@ DebouncedGPIO::DebouncedGPIO(LightSwitch & ls) : lightSwitch{ls}
 
 void DebouncedGPIO::high()
 {
-  this->lightSwitch.externalToggle();
+
 }
 
 void DebouncedGPIO::low()
 {
     
+}
+
+void DebouncedGPIO::loop()
+{
+  this->lightSwitch.externalToggle();  
 }
 
