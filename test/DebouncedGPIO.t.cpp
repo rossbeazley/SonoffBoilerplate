@@ -31,18 +31,18 @@ TEST_CASE("Debouncing high low from a gpio", "[DebouncedGPIO]" ) {
 
 	SECTION("Low to High results in TOGGLE") {
 
-		debounced->high();
+		debounced->high(1);
 		REQUIRE( cls.state == 0);
-		debounced->loop();
+		debounced->loop(200);
 		REQUIRE( cls.state == 4);
 	}
 
 	SECTION("Low to High quickly results in no change, NEED TO INTRODUCE CONCEPT OF TIME") {
 
 		int preState = cls.state;
-		debounced->high();
+		debounced->high(1);
 		REQUIRE( cls.state == preState);
-		debounced->loop();
+		debounced->loop(90);
 		REQUIRE( cls.state == preState);
 	}
 
