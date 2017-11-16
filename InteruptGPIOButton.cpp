@@ -14,11 +14,11 @@ InteruptGPIOButton::InteruptGPIOButton(AbstractButton & ab) : button{ab}
   InteruptGPIOButtonISRLambda = [this]()->void{
     if (digitalRead(14))
     {
-      this->button.high();
+      this->button.high(millis());
     }
     else
     {
-      this->button.low();
+      this->button.low(millis());
     }
 
 

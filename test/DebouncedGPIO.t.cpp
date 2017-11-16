@@ -26,7 +26,7 @@ TEST_CASE("Debouncing high low from a gpio", "[DebouncedGPIO]" ) {
 
 	CapturingLightSwitch cls{};	
 	AbstractButton * debounced = new DebouncedGPIO{cls};
-	debounced->low();
+	debounced->low(0);
 
 
 	SECTION("Low to High results in TOGGLE") {
@@ -37,7 +37,7 @@ TEST_CASE("Debouncing high low from a gpio", "[DebouncedGPIO]" ) {
 		REQUIRE( cls.state == 4);
 	}
 
-	SECTION("Low to High quickly results in no change, NEED TO INTRODUCE CONCEPT OF TIME") {
+	SECTION("Low to High quickly (less than 100 millis) results in no change") {
 
 		int preState = cls.state;
 		debounced->high(1);

@@ -5,18 +5,21 @@ DebouncedGPIO::DebouncedGPIO(LightSwitch & ls) : lightSwitch{ls}
   
 }
 
-void DebouncedGPIO::high()
+void DebouncedGPIO::high(unsigned long uptime)
 {
-
+  this->interactionTime = uptime;
 }
 
-void DebouncedGPIO::low()
+void DebouncedGPIO::low(unsigned long uptime)
 {
     
 }
 
-void DebouncedGPIO::loop()
+void DebouncedGPIO::loop(unsigned long uptime)
 {
-  this->lightSwitch.externalToggle();  
+  if(uptime - this->interactionTime > 100) {
+    this->lightSwitch.externalToggle();  
+  }
+  
 }
 
