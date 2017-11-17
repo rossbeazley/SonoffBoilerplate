@@ -1,5 +1,4 @@
 #include "SonoffApplicationCore.h"
-#include <Arduino.h>
 
 SonoffApplicationCore::SonoffApplicationCore(Relay * relay,bool initialStateOnIsTrue)
 {

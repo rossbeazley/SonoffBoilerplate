@@ -40,7 +40,7 @@ void loop()
   //Serial.println("loop");
   appShell->loop();
   
-  //mqtt loop
+//mqtt loop
 //  if (MQTT_ENABLED) {
 //    if (!mqttClient.connected()) {
 //      mqttInbound->connectToMQTT();

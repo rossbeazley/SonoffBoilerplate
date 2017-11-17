@@ -43,7 +43,7 @@ TEST_CASE("Relay pin mode set to OUTPUT", "[SonoffRelay]" ) {
 	}
 
 	SECTION("Pin 14 is an input") {
-		REQUIRE( spyPinMode[14] == INPUT );
+		REQUIRE( spyPinMode[14] == INPUT_PULLUP );
 	}
 
 	SECTION("ISR fires, button on") {

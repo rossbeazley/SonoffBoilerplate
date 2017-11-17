@@ -17,7 +17,7 @@ SonoffApplicationShell::SonoffApplicationShell()
   // New internal button
   
   // New OTA
-  
+  this->myCore.addObserver(&sd);
   Serial.println("Constructed app shell");
 }
 
@@ -28,7 +28,7 @@ void SonoffApplicationShell::loop()
   //Serial.println("APP loop");
   
   internalButton.loop();
-
+  debouncedButton.loop(millis());
   //Serial.println("APP loop done");
   
   

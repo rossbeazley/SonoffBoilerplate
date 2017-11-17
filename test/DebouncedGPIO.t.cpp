@@ -104,3 +104,43 @@ TEST_CASE("Debounced high to Low","[DebouncedGPIO]") {
 		REQUIRE( cls.state == 4);
 	}
 }
+
+
+TEST_CASE("Debounced Low to High","[DebouncedGPIO]") {
+	CapturingLightSwitch cls{};
+	AbstractButton * debounced = new DebouncedGPIO{cls};
+	debounced->low(0);
+	debounced->loop(101);
+	cls.state = 2;
+
+	SECTION("High to Low results in toggle") {
+		debounced->high(1);
+		debounced->low(2);
+		debounced->high(3);
+		debounced->high(3);
+		debounced->high(3);
+		debounced->loop(200);
+		REQUIRE( cls.state == 4);
+	}
+}
+
+TEST_CASE("Two presses Low to High, High to Low","[DebouncedGPIO]") {
+	CapturingLightSwitch cls{};
+	AbstractButton * debounced = new DebouncedGPIO{cls};
+	debounced->low(0);
+	debounced->loop(101);
+	cls.state = 2;
+
+	SECTION("High to Low results in toggle") {
+		debounced->high(1);
+		debounced->high(3);
+		debounced->loop(200);
+		cls.state = 1;
+
+		debounced->low(201);
+		debounced->low(203);
+		debounced->loop(310);
+		REQUIRE( cls.state == 4);
+	}
+}
+

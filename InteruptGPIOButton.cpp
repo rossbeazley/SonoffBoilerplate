@@ -9,7 +9,7 @@ void InteruptGPIOButtonISR()
   InteruptGPIOButtonISRLambda();
 }
 
-InteruptGPIOButton::InteruptGPIOButton(AbstractButton & ab) : button{ab}
+InteruptGPIOButton::InteruptGPIOButton(AbstractButton & ab) : button(ab)
 {
   InteruptGPIOButtonISRLambda = [this]()->void{
     if (digitalRead(14))
@@ -23,6 +23,6 @@ InteruptGPIOButton::InteruptGPIOButton(AbstractButton & ab) : button{ab}
 
 
   };
-  pinMode(14, INPUT);
+  pinMode(14, INPUT_PULLUP);
   attachInterrupt(14, InteruptGPIOButtonISR, CHANGE);
 }
