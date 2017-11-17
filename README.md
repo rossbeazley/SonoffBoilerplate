@@ -103,5 +103,10 @@ Relay and GPIORelayImpl
 ApplicationCore
 
 
+Next up, split the mqtt stuff into
+A) a client that maintains connection
+B) an outbound channel that posts to this client
+C) an inbound channel that receives topic payloads
+
 
 
