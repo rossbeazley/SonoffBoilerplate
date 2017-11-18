@@ -1,9 +1,15 @@
 
 #include "MQTTOutbound.h"
 
-//think this could be implementing a general "publisher" of the MQTT implementation
-//it needs a mediator to observer the app core and publish when required
-//this mediator can probably either be an pub/sub or allow the sub to poke it
+/*
+ * 
+ * 
+ * Take in instance of the MQTTConnection and publish to that
+ * 
+ * 
+ * 
+ * 
+ */
 
 MQTTOutbound::MQTTOutbound(char * mqttTopic) :
                                               _mqttTopic{mqttTopic}

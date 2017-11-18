@@ -39,7 +39,7 @@ class SonoffApplicationShell
     SonoffApplicationCore myCore{&relay, sonoffSettings.bootState() };
     SonoffInternalButton internalButton{&myCore};
     MQTTOutbound mob{sonoffSettings.mqttTopic()};
-    MQTTInbound inbound{sonoffSettings.mqttClientID(),sonoffSettings.mqttTopic(), &myCore};
+    MQTTInbound inbound{sonoffSettings.mqttTopic(), &myCore};
     DebouncedGPIO debouncedButton{myCore};
     InteruptGPIOButton interuptButton{debouncedButton};
 };
