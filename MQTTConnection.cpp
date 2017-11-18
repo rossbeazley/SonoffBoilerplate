@@ -13,18 +13,22 @@ int         lastMQTTConnectionAttempt = 0;
 
 
 
-MQTTConnection::MQTTConnection(char * clientID, char * topic, MQTTInbound * inbound) :
-  mqttClientID(clientID)
+MQTTConnection::MQTTConnection(char* mqttHostname, int mqttPort, char * clientID, char * topic, MQTTInbound * inbound) :
+    mqttHostname{mqttHostname}
+  , mqttPort{mqttPort}
+  , mqttClientID(clientID)
   , mqttTopic{topic}
   , inbound{inbound}
 {
-
+    this->mqttClient.set_server(this->mqttHostname, this->mqttPort);
 }
 
 void MQTTConnection::loop()
 {
   if (!this->mqttClient.connected()) {
-    connectToMQTT();
+     this->connectToMQTT();
+  } else {
+     this->mqttClient.loop();
   }
 }
 

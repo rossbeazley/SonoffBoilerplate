@@ -10,6 +10,7 @@
 
 #include "MQTTOutbound.h"
 #include "MQTTInbound.h"
+#include "MQTTConnection.h"
 
 #include "DebouncedGPIO.h"
 
@@ -33,13 +34,23 @@ class SonoffApplicationShell
     void debugDump();
   private:
     StateDebug sd{};
+    
     EEPROMSettings sonoffSettings;
+    
     SonoffWifi wifi{sonoffSettings};
+    
     GPIORelay relay{12};
+    
     SonoffApplicationCore myCore{&relay, sonoffSettings.bootState() };
+    
     SonoffInternalButton internalButton{&myCore};
-    MQTTOutbound mob{sonoffSettings.mqttTopic()};
+    
+    
     MQTTInbound inbound{sonoffSettings.mqttTopic(), &myCore};
+    
+    MQTTConnection mttConnection{sonoffSettings.mqttHostname(), atoi(sonoffSettings.mqttPort()), sonoffSettings.mqttClientID(),sonoffSettings.mqttTopic(), &inbound};
+    MQTTOutbound outbound{sonoffSettings.mqttTopic(), mttConnection};
+    
     DebouncedGPIO debouncedButton{myCore};
     InteruptGPIOButton interuptButton{debouncedButton};
 };
