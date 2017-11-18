@@ -1,8 +1,8 @@
 #pragma once
 
 
-#define HOSTNAME "dev"
-#define EEPROM_SALT 12663
+#define HOSTNAME "sonoff"
+#define EEPROM_SALT 12664
 typedef struct {
   char  bootState[4]      = "off";
   char  mqttHostname[33]  = "192.168.10.2";

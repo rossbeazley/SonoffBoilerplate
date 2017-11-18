@@ -43,7 +43,8 @@ void MQTTInbound::message(String topic, String payload)
 
     // strip the topic from the start of the message, suggests topic shouldnt be known in this method
     topic = topic.substring(strlen(this->mqttTopic) + 1);
-    
+
+    //TODO need to put channel ID in config
     String channelString = getValue(topic, '/', 0);
     if (!channelString.startsWith("channel-")) {
       Serial.println("no channel");
