@@ -1,7 +1,10 @@
 #include <Arduino.h>
+#include "SerialLogger.h"
+
+Logger * logger;
 
 void setup() {
-    // put your setup code here, to run once:
+    logger = new SerialLogger();
 }
 
 void loop() {
