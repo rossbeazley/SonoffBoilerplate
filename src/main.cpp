@@ -1,5 +1,6 @@
+#ifndef UNIT_TEST
 #include <Arduino.h>
-#include "SerialLogger.h"
+#include <SerialLogger.h>
 
 Logger * logger;
 
@@ -10,3 +11,4 @@ void setup() {
 void loop() {
     // put your main code here, to run repeatedly:
 }
+#endif

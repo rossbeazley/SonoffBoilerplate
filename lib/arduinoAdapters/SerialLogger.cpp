@@ -1,5 +1,5 @@
 #include "SerialLogger.h"
-
+#include <Arduino.h>
 
 SerialLogger::SerialLogger()
 {
