@@ -14,6 +14,8 @@
 
 #include "DebouncedGPIO.h"
 
+#include "OTAUpdate.h"
+
 class StateDebug : public SonoffApplicationCoreObserver
 {
   public:
@@ -33,9 +35,10 @@ class SonoffApplicationShell
     void loop();
     void debugDump();
   private:
+    OTAUpdate otaUpdate{};
     StateDebug sd{};
     
-    EEPROMSettings sonoffSettings;
+    EEPROMSettings sonoffSettings{};
     
     SonoffWifi wifi{sonoffSettings};
     
@@ -44,7 +47,6 @@ class SonoffApplicationShell
     SonoffApplicationCore myCore{&relay, sonoffSettings.bootState() };
     
     SonoffInternalButton internalButton{&myCore};
-    
     
     MQTTInbound inbound{sonoffSettings.mqttTopic(), &myCore};
     

@@ -17,6 +17,7 @@ SonoffApplicationShell::SonoffApplicationShell()
 void SonoffApplicationShell::loop()
 {
   //Serial.println("APP loop");
+  otaUpdate.loop();
   mttConnection.loop();
   internalButton.loop();
   debouncedButton.loop(millis());
