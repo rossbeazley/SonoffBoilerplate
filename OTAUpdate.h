@@ -3,7 +3,9 @@
 class OTAUpdate
 {
   public:
-    OTAUpdate();
+    OTAUpdate(char*);
     void loop();
+  private:
+    char* hostname;
 };
 

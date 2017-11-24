@@ -35,7 +35,7 @@ class SonoffApplicationShell
     void loop();
     void debugDump();
   private:
-    OTAUpdate otaUpdate{};
+    OTAUpdate otaUpdate{sonoffSettings.mqttHostname()};
     StateDebug sd{};
     
     EEPROMSettings sonoffSettings{};

@@ -1,6 +1,7 @@
 #include "OTAUpdate.h"
+#include <ArduinoOTA.h>
 
-OTAUpdate::OTAUpdate()
+OTAUpdate::OTAUpdate(char* hostname) : hostname(hostname)
 {
   ArduinoOTA.onStart([]() {
     Serial.println("Start OTA");
@@ -28,7 +29,7 @@ OTAUpdate::OTAUpdate()
   ArduinoOTA.begin();
 }
 
-void OTAUpdate::OTAUpdate()
+void OTAUpdate::loop()
 {
   ArduinoOTA.handle();
 }
