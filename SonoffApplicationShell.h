@@ -35,10 +35,11 @@ class SonoffApplicationShell
     void loop();
     void debugDump();
   private:
-    OTAUpdate otaUpdate{sonoffSettings.mqttHostname()};
     StateDebug sd{};
     
     EEPROMSettings sonoffSettings{};
+    
+    OTAUpdate otaUpdate{sonoffSettings.mqttHostname(), sonoffSettings.mqttClientID()};
     
     SonoffWifi wifi{sonoffSettings};
     
