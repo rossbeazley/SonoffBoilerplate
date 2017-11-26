@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include <Arduino.h>
-#include "../SonoffRelay.h"
+#include "../src/SonoffRelay.h"
 
 class CapturingObserver : public RelayObserver
 { public:

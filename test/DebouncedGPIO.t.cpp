@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 
-#include "../DebouncedGPIO.h"
+#include "../src/DebouncedGPIO.h"
 class CapturingLightSwitch : public LightSwitch
 { 
 	public:

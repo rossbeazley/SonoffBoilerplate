@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include <Arduino.h>
-#include "../SonoffApplicationCore.h"
+#include "../src/SonoffApplicationCore.h"
 
 const int OPEN=1;
 const int CLOSED=2;

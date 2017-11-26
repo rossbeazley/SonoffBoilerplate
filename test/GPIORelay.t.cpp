@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include <Arduino.h>
-#include "../GPIORelay.h"
+#include "../src/GPIORelay.h"
 
 class CapturingRelayObserver : public RelayObserver
 {
