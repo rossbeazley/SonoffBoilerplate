@@ -1,0 +1,2 @@
+/usr/bin/ar qc libarduinostub.a  CMakeFiles/arduinostub.dir/arduinostub/Arduino.cpp.o
+/usr/bin/ranlib libarduinostub.a

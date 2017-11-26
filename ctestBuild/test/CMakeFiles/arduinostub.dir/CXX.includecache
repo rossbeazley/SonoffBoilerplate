@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/rdlb/programing/arduino/SonoffBoilerplate/test/arduinostub/Arduino.cpp
+Arduino.h
+/home/rdlb/programing/arduino/SonoffBoilerplate/test/arduinostub/Arduino.h
+iostream
+-
+
+/home/rdlb/programing/arduino/SonoffBoilerplate/test/arduinostub/Arduino.h
+map
+-
+

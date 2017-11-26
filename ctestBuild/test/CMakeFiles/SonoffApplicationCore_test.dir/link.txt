@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/SonoffApplicationCore_test.dir/__/src/SonoffApplicationCore.cpp.o CMakeFiles/SonoffApplicationCore_test.dir/SonoffApplicationCore.t.cpp.o  -o SonoffApplicationCore_test -rdynamic libarduinostub.a 

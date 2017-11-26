@@ -1,0 +1,92 @@
+Start testing: Nov 26 22:10 GMT
+----------------------------------------------------------
+1/4 Testing: GPIORelay_test
+1/4 Test: GPIORelay_test
+Command: "/home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test/GPIORelay_test"
+Directory: /home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test
+"GPIORelay_test" start time: Nov 26 22:10 GMT
+Output:
+----------------------------------------------------------
+Serial.println(Constructing GPIORelay)
+pinMode(12, 1)
+Serial.println(Constructed GPIORelay)
+Serial.println(Constructing GPIORelay)
+pinMode(12, 1)
+Serial.println(Constructed GPIORelay)
+digitalWrite(12, 0)
+Serial.println(Constructing GPIORelay)
+pinMode(12, 1)
+Serial.println(Constructed GPIORelay)
+digitalWrite(12, 1)
+===============================================================================
+All tests passed (5 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"GPIORelay_test" end time: Nov 26 22:10 GMT
+"GPIORelay_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/4 Testing: SonoffApplicationCore_test
+2/4 Test: SonoffApplicationCore_test
+Command: "/home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test/SonoffApplicationCore_test"
+Directory: /home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test
+"SonoffApplicationCore_test" start time: Nov 26 22:10 GMT
+Output:
+----------------------------------------------------------
+===============================================================================
+All tests passed (7 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"SonoffApplicationCore_test" end time: Nov 26 22:10 GMT
+"SonoffApplicationCore_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: InteruptButton_test
+3/4 Test: InteruptButton_test
+Command: "/home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test/InteruptButton_test"
+Directory: /home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test
+"InteruptButton_test" start time: Nov 26 22:10 GMT
+Output:
+----------------------------------------------------------
+pinMode(14, 2)
+pinMode(14, 2)
+pinMode(14, 2)
+digitalRead(14)
+pinMode(14, 2)
+digitalRead(14)
+===============================================================================
+All tests passed (6 assertions in 1 test case)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"InteruptButton_test" end time: Nov 26 22:10 GMT
+"InteruptButton_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/4 Testing: DebouncedGPIO_test
+4/4 Test: DebouncedGPIO_test
+Command: "/home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test/DebouncedGPIO_test"
+Directory: /home/rdlb/programing/arduino/SonoffBoilerplate/ctestBuild/test
+"DebouncedGPIO_test" start time: Nov 26 22:10 GMT
+Output:
+----------------------------------------------------------
+===============================================================================
+All tests passed (12 assertions in 6 test cases)
+
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"DebouncedGPIO_test" end time: Nov 26 22:10 GMT
+"DebouncedGPIO_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 26 22:10 GMT

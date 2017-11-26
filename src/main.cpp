@@ -1,14 +1,18 @@
-#ifndef UNIT_TEST
 #include <Arduino.h>
-#include <SerialLogger.h>
+#include "SonoffApplicationShell.h"
 
-Logger * logger;
+SonoffApplicationShell * appShell = nullptr;
 
-void setup() {
-    logger = new SerialLogger();
+void setup()
+{
+  Serial.begin(115200);
+  Serial.println("start setup");
+  appShell = new SonoffApplicationShell{};
+  Serial.println("done setup");
 }
 
-void loop() {
-    // put your main code here, to run repeatedly:
+void loop()
+{
+  appShell->loop();
 }
-#endif
+
