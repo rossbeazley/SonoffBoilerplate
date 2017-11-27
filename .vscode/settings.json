@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.env.linux": {
+        "PATH": "/home/rdlb/.platformio/penv/bin:/home/rdlb/bin:/opt/java/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/opt/google/android-sdk/platform-tools/"
+    }
+}
