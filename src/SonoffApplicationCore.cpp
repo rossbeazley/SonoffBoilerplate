@@ -1,25 +1,25 @@
 #include "SonoffApplicationCore.h"
 
-SonoffApplicationCore::SonoffApplicationCore(Relay * relay,bool initialStateOnIsTrue)
+SonoffApplicationCore::SonoffApplicationCore(Relay & relay,bool initialStateOnIsTrue) : relay(relay)
 {
-  this->relay = relay;
-  this->relay->addObserver(this);
+  
+  this->relay.addObserver(this);
   if(initialStateOnIsTrue)
   {
-    relay->close();
+    this->relay.close();
   }
   
 }
 
 void SonoffApplicationCore::externalOn() 
 {
-  this->relay->close();  
+  this->relay.close();  
 }
 
 
 void SonoffApplicationCore::externalOff() 
 {
-  this->relay->open();  
+  this->relay.open();  
 }
 
 

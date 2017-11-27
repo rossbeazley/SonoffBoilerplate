@@ -45,7 +45,7 @@ class SonoffApplicationShell
     
     GPIORelay relay{12};
     
-    SonoffApplicationCore myCore{&relay, sonoffSettings.bootState() };
+    SonoffApplicationCore myCore{relay, sonoffSettings.bootState() };
     
     SonoffInternalButton internalButton{&myCore};
     

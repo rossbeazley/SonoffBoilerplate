@@ -62,7 +62,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 	
 	SECTION("Turning on will close the relay") {
 		CapturingRelay relay{};
-		SonoffApplicationCore app{&relay};
+		SonoffApplicationCore app{relay};
 		app.externalOn();
 
 		REQUIRE( relay.state==CLOSED );
@@ -70,7 +70,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 
 	SECTION("Turning off will open the relay") {
 		CapturingRelay relay{};
-                SonoffApplicationCore app{&relay};
+                SonoffApplicationCore app{relay};
 	        app.externalOff();
 
                 REQUIRE( relay.state==OPEN );
@@ -80,7 +80,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		AppObserver appObserver{};
 		
 		CapturingRelay relay{};
-		SonoffApplicationCore app{&relay};
+		SonoffApplicationCore app{relay};
 		app.addObserver(&appObserver);
 
 		relay.announceClose();
@@ -92,7 +92,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		AppObserver appObserver{};
 		
 		CapturingRelay relay{};
-		SonoffApplicationCore app{&relay};
+		SonoffApplicationCore app{relay};
 		app.addObserver(&appObserver);
 
 		relay.announceOpen();
@@ -105,7 +105,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		AppObserver appObserver{};
 		
 		CapturingRelay relay{};
-		SonoffApplicationCore app{&relay};
+		SonoffApplicationCore app{relay};
 		app.addObserver(&appObserver);
 		app.externalOff();
 		app.externalToggle();
@@ -118,7 +118,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 		AppObserver appObserver{};
 		
 		CapturingRelay relay{};
-		SonoffApplicationCore app{&relay};
+		SonoffApplicationCore app{relay};
 		app.addObserver(&appObserver);
 		app.externalOn();
 		app.externalToggle();
@@ -127,7 +127,7 @@ TEST_CASE("TODO", "[SonoffApplicationCore]" ) {
 
 	SECTION("Constructing app core with true makes relay closed") {
 		CapturingRelay relay{};
-                SonoffApplicationCore app{&relay, (strcmp("on", "on") == 0)};
+                SonoffApplicationCore app{relay, (strcmp("on", "on") == 0)};
 
                 REQUIRE( relay.state==CLOSED );
 
