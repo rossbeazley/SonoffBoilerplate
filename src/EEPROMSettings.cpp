@@ -33,7 +33,7 @@ void EEPROMSettings::debugDump()
 {
   
   Serial.println(settings.bootState);
-  Serial.println(this->settings.mqttHostname);
+  Serial.println(this->settings.mqttServer);
   Serial.println(this->settings.mqttPort);
   Serial.println(this->settings.mqttClientID);
   Serial.println(this->settings.mqttTopic);
@@ -49,9 +49,9 @@ bool  EEPROMSettings::bootState()
   return (strcmp(this->settings.bootState , "on") == 0);
 }
 
-char*  EEPROMSettings::mqttHostname()
+char*  EEPROMSettings::mqttServer()
 {
-  return this->settings.mqttHostname;
+  return this->settings.mqttServer;
 }
 
 char*  EEPROMSettings::mqttPort()

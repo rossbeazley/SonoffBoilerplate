@@ -68,7 +68,7 @@ ticker.attach(0.6, tick);
   WiFiManagerParameter custom_mqtt_text("<br/>MQTT config. <br/> No url to disable.<br/>");
   wifiManager.addParameter(&custom_mqtt_text);
 
-  WiFiManagerParameter custom_mqtt_hostname("mqtt-hostname", "Hostname", sonoffSettings.mqttHostname(), 33);
+  WiFiManagerParameter custom_mqtt_hostname("mqtt-hostname", "Hostname", sonoffSettings.mqttServer(), 33);
   wifiManager.addParameter(&custom_mqtt_hostname);
 
   WiFiManagerParameter custom_mqtt_port("mqtt-port", "port", sonoffSettings.mqttPort(), 6);
@@ -100,7 +100,7 @@ Serial.println("Wifi about to connect");
     WMSettings newSettings;
     strcpy(newSettings.bootState, custom_boot_state.getValue());
 
-    strcpy(newSettings.mqttHostname, custom_mqtt_hostname.getValue());
+    strcpy(newSettings.mqttServer, custom_mqtt_hostname.getValue());
     strcpy(newSettings.mqttPort, custom_mqtt_port.getValue());
     strcpy(newSettings.mqttClientID, custom_mqtt_client_id.getValue());
     strcpy(newSettings.mqttTopic, custom_mqtt_topic.getValue());

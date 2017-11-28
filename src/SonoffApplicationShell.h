@@ -39,7 +39,7 @@ class SonoffApplicationShell
     
     EEPROMSettings sonoffSettings{};
     
-    OTAUpdate otaUpdate{sonoffSettings.mqttHostname(), sonoffSettings.mqttClientID()};
+    OTAUpdate otaUpdate{sonoffSettings.mqttServer(), sonoffSettings.mqttClientID()};
     
     SonoffWifi wifi{sonoffSettings};
     
@@ -51,7 +51,7 @@ class SonoffApplicationShell
     
     MQTTInbound inbound{sonoffSettings.mqttTopic(), &myCore};
     
-    MQTTConnection mttConnection{sonoffSettings.mqttHostname(), atoi(sonoffSettings.mqttPort()), sonoffSettings.mqttClientID(),sonoffSettings.mqttTopic(), &inbound};
+    MQTTConnection mttConnection{sonoffSettings.mqttServer(), atoi(sonoffSettings.mqttPort()), sonoffSettings.mqttClientID(),sonoffSettings.mqttTopic(), &inbound};
     MQTTOutbound outbound{sonoffSettings.mqttTopic(), mttConnection};
     
     DebouncedGPIO debouncedButton{myCore};

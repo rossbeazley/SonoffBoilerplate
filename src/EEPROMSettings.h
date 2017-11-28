@@ -5,7 +5,7 @@
 #define EEPROM_SALT 12664
 typedef struct {
   char  bootState[4]      = "off";
-  char  mqttHostname[33]  = "192.168.10.2";
+  char  mqttServer[33]  = "192.168.10.2";
   char  mqttPort[6]       = "1883";
   char  mqttClientID[24]  = "";
   char  mqttTopic[33]     = HOSTNAME;
@@ -23,7 +23,7 @@ class EEPROMSettings
     
     char* mqttTopic();
     bool  bootState();
-    char* mqttHostname();
+    char* mqttServer();
     char*  mqttPort();
     char* mqttClientID();
   private:

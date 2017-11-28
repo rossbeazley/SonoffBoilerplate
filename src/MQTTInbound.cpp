@@ -53,6 +53,13 @@ void MQTTInbound::message(String topic, String payload)
     channelString.replace("channel-", "");
     int channel = channelString.toInt();
     Serial.println(channel);
+
+    //NEED TO DO SOMETHING WITH CHANNEL
+    //LIKE CHECK THE MESSAGE IS FOR OUR CHANNEL
+    //AND MAKE THE CHANNEL ID CONFIGURABLE
+    //AND STASH IN THE EEPROMSettings
+
+
     if (payload == "on") {
       this->appCore->externalOn();
     }
