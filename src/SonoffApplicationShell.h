@@ -8,9 +8,9 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-#include "MQTTOutbound.h"
-#include "MQTTInbound.h"
-#include "MQTTConnection.h"
+#include "mqtt/MQTTOutbound.h"
+#include "mqtt/MQTTInbound.h"
+#include "mqtt/MQTTConnection.h"
 
 #include "DebouncedGPIO.h"
 

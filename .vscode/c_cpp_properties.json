@@ -9,7 +9,6 @@
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/variants/generic",
                 "/home/rdlb/programing/arduino/SonoffBoilerplate/src",
                 "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/PubSubClient/src",
-                "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/EEPROM",
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266mDNS",
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ArduinoOTA",
@@ -17,6 +16,7 @@
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/DNSServer/src",
                 "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/WiFiManager",
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/Ticker",
+                "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/EEPROM",
                 "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/PubSubClient/src",
                 "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/WiFiManager",
                 "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
@@ -69,7 +69,6 @@
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/variants/generic",
                     "/home/rdlb/programing/arduino/SonoffBoilerplate/src",
                     "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/PubSubClient/src",
-                    "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/EEPROM",
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266mDNS",
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ArduinoOTA",
@@ -77,6 +76,7 @@
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/DNSServer/src",
                     "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/WiFiManager",
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/Ticker",
+                    "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/EEPROM",
                     "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/PubSubClient/src",
                     "/home/rdlb/programing/arduino/SonoffBoilerplate/lib/WiFiManager",
                     "/home/rdlb/.platformio/packages/framework-arduinoespressif8266/libraries/ESP8266WiFi/src",
@@ -130,7 +130,7 @@
                 "ESP8266",
                 "ARDUINO_ARCH_ESP8266",
                 "ARDUINO_ESP8266_ESP01",
-                ""
+                "__GNUC__"
             ],
             "intelliSenseMode": "clang-x64"
         }
