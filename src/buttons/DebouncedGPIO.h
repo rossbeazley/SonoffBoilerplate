@@ -1,6 +1,6 @@
 #pragma once
 #include "InteruptGPIOButton.h"
-#include "SonoffApplicationCore.h"
+#include "RelayLightSwitch.h"
 
 class DebouncedGPIO : public AbstractButton
 {

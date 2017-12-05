@@ -18,7 +18,7 @@ class Relay
 
 
 
-class SonoffApplicationCoreObserver
+class RelayLightSwitchObserver
 {
   public:
     virtual void ON() = 0;
@@ -34,14 +34,14 @@ class LightSwitch
     virtual void externalToggle() = 0;
 };
 
-class SonoffApplicationCore : public RelayObserver, public LightSwitch
+class RelayLightSwitch : public RelayObserver, public LightSwitch
 {
   public:
-    SonoffApplicationCore(Relay&,bool = false); //think i can avoid pointers?
+    RelayLightSwitch(Relay&,bool = false); //think i can avoid pointers?
     void externalOn();
     void externalOff();
     void externalToggle();
-    void addObserver(SonoffApplicationCoreObserver*);
+    void addObserver(RelayLightSwitchObserver*);
     //void toggleLight();
     //void resetSettings();
     //void restart();
@@ -51,7 +51,7 @@ class SonoffApplicationCore : public RelayObserver, public LightSwitch
     void OPEN();
   private:
     Relay& relay;
-    SonoffApplicationCoreObserver* obs = nullptr;
+    RelayLightSwitchObserver* obs = nullptr;
     bool on;
     
   

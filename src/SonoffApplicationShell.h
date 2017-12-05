@@ -4,7 +4,7 @@
 
 #include "SonoffWifi.h"
 #include "GPIORelay.h"
-#include "SonoffInternalButton.h"
+#include "buttons/SonoffInternalButton.h"
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
@@ -12,11 +12,11 @@
 #include "mqtt/MQTTInbound.h"
 #include "mqtt/MQTTConnection.h"
 
-#include "DebouncedGPIO.h"
+#include "buttons/DebouncedGPIO.h"
 
 #include "OTAUpdate.h"
 
-class StateDebug : public SonoffApplicationCoreObserver
+class StateDebug : public RelayLightSwitchObserver
 {
   public:
   StateDebug(){};
@@ -45,7 +45,7 @@ class SonoffApplicationShell
     
     GPIORelay relay{12};
     
-    SonoffApplicationCore myCore{relay, sonoffSettings.bootState() };
+    RelayLightSwitch myCore{relay, sonoffSettings.bootState() };
     
     SonoffInternalButton internalButton{&myCore};
     

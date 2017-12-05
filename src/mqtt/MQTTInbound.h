@@ -1,16 +1,16 @@
 #pragma once
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "SonoffApplicationCore.h"
+#include "RelayLightSwitch.h"
 
 class MQTTInbound
 {
   public:
-    MQTTInbound(char * topic, SonoffApplicationCore * appcore);
+    MQTTInbound(char * topic, RelayLightSwitch * appcore);
     void message(String topic, String payload);
 
   private:
     char * mqttTopic;
-    SonoffApplicationCore* appCore;
+    RelayLightSwitch* appCore;
 };
 

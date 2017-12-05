@@ -1,7 +1,7 @@
 #pragma once
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include "SonoffApplicationCore.h"
+#include "RelayLightSwitch.h"
 #include "MQTTInbound.h"
 
 class MQTTConnection

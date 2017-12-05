@@ -1,6 +1,6 @@
 #pragma once
 #include <Arduino.h>
-#include "SonoffApplicationCore.h"
+#include "RelayLightSwitch.h"
 
 const int CMD_WAIT = 0;
 const int CMD_BUTTON_CHANGE = 1;
@@ -8,13 +8,13 @@ const int CMD_BUTTON_CHANGE = 1;
 class SonoffInternalButton
 {
   public:
-    SonoffInternalButton(SonoffApplicationCore*);
+    SonoffInternalButton(RelayLightSwitch*);
     void loop();
     void toggleState();
     void restart();
     void reset();
   private:
-    SonoffApplicationCore * core;
+    RelayLightSwitch * core;
     int buttonState = HIGH;
     long startPress = 0;
     int cmd = CMD_WAIT;

@@ -1,6 +1,6 @@
-#include "SonoffApplicationCore.h"
+#include "RelayLightSwitch.h"
 
-SonoffApplicationCore::SonoffApplicationCore(Relay & relay,bool initialStateOnIsTrue) : relay(relay)
+RelayLightSwitch::RelayLightSwitch(Relay & relay,bool initialStateOnIsTrue) : relay(relay)
 {
   
   this->relay.addObserver(this);
@@ -11,19 +11,19 @@ SonoffApplicationCore::SonoffApplicationCore(Relay & relay,bool initialStateOnIs
   
 }
 
-void SonoffApplicationCore::externalOn() 
+void RelayLightSwitch::externalOn() 
 {
   this->relay.close();  
 }
 
 
-void SonoffApplicationCore::externalOff() 
+void RelayLightSwitch::externalOff() 
 {
   this->relay.open();  
 }
 
 
-void SonoffApplicationCore::externalToggle()
+void RelayLightSwitch::externalToggle()
 {
   if(this->on) 
   {
@@ -35,13 +35,13 @@ void SonoffApplicationCore::externalToggle()
   }
 }
 
-void SonoffApplicationCore::addObserver(SonoffApplicationCoreObserver* obs)
+void RelayLightSwitch::addObserver(RelayLightSwitchObserver* obs)
 {
   this->obs = obs;;
 }
 
 
-void SonoffApplicationCore::CLOSED()
+void RelayLightSwitch::CLOSED()
 {
   this->on=true;
   if(this->obs)
@@ -50,7 +50,7 @@ void SonoffApplicationCore::CLOSED()
   }
 }
 
-void SonoffApplicationCore::OPEN()
+void RelayLightSwitch::OPEN()
 {
   this->on=false;
   if(this->obs)

@@ -33,7 +33,7 @@ void SonoffInternalButton::toggleState() {
 }
 
 
-SonoffInternalButton::SonoffInternalButton(SonoffApplicationCore * core) : core{core}
+SonoffInternalButton::SonoffInternalButton(RelayLightSwitch * core) : core{core}
 {
 
 //setup button

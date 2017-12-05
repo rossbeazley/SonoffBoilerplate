@@ -1,5 +1,5 @@
 #pragma once
-#include "SonoffApplicationCore.h"
+#include "RelayLightSwitch.h"
 #include <Arduino.h>
 
 class GPIORelay : public Relay
