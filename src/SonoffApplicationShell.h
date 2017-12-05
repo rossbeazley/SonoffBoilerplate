@@ -1,8 +1,8 @@
 #pragma once
 
-#include "EEPROMSettings.h"
+#include "setup/EEPROMSettings.h"
 
-#include "SonoffWifi.h"
+#include "setup/SonoffWifi.h"
 #include "GPIORelay.h"
 #include "buttons/SonoffInternalButton.h"
 #include <ESP8266WiFi.h>
@@ -14,7 +14,7 @@
 
 #include "buttons/DebouncedGPIO.h"
 
-#include "OTAUpdate.h"
+#include "setup/OTAUpdate.h"
 
 class StateDebug : public RelayLightSwitchObserver
 {
