@@ -2,10 +2,10 @@ add_library(arduinostub arduinostub/Arduino.cpp)
 
 target_include_directories(arduinostub PUBLIC arduinostub/)
 
-add_executable(DebouncedGPIO_test ../src/DebouncedGPIO.h ../src/DebouncedGPIO.cpp DebouncedGPIO.t.cpp)
-add_executable(InteruptButton_test ../src/InteruptGPIOButton.h ../src/InteruptGPIOButton.cpp InteruptGPIO.t.cpp)
+add_executable(DebouncedGPIO_test ../src/buttons/DebouncedGPIO.h ../src/buttons/DebouncedGPIO.cpp DebouncedGPIO.t.cpp)
+add_executable(InteruptButton_test ../src/buttons/InteruptGPIOButton.h ../src/buttons/InteruptGPIOButton.cpp InteruptGPIO.t.cpp)
 add_executable(GPIORelay_test ../src/GPIORelay.h ../src/GPIORelay.cpp GPIORelay.t.cpp)
-add_executable(RelayLightSwitch_test ../src/SonoffApplicationCore.h ../src/RelayLightSwitch.cpp RelayLightSwitch.t.cpp)
+add_executable(RelayLightSwitch_test ../src/RelayLightSwitch.h ../src/RelayLightSwitch.cpp RelayLightSwitch.t.cpp)
 
 target_link_libraries(GPIORelay_test PRIVATE arduinostub)
 target_link_libraries(RelayLightSwitch_test PRIVATE arduinostub)
