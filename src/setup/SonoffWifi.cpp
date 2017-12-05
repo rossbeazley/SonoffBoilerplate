@@ -80,6 +80,9 @@ ticker.attach(0.6, tick);
   WiFiManagerParameter custom_mqtt_topic("mqtt-topic", "Topic", sonoffSettings.mqttTopic(), 33);
   wifiManager.addParameter(&custom_mqtt_topic);
 
+  WiFiManagerParameter custom_sonoff_hostname("sonoff-hostname", "SonoffHostname", sonoffSettings.sonoffHostname(), 10);
+  wifiManager.addParameter(&custom_sonoff_hostname);
+
   //set config save notify callback
   wifiManager.setSaveConfigCallback(saveConfigCallback);
 
@@ -104,6 +107,8 @@ Serial.println("Wifi about to connect");
     strcpy(newSettings.mqttPort, custom_mqtt_port.getValue());
     strcpy(newSettings.mqttClientID, custom_mqtt_client_id.getValue());
     strcpy(newSettings.mqttTopic, custom_mqtt_topic.getValue());
+    strcpy(newSettings.sonoffHostname, custom_sonoff_hostname.getValue());
+    
 
     Serial.println(sonoffSettings.bootState());
 

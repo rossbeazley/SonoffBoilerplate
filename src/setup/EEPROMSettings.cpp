@@ -64,6 +64,11 @@ char*  EEPROMSettings::mqttClientID()
   return this->settings.mqttClientID;
 }
 
+char*  EEPROMSettings::sonoffHostname()
+{
+  return this->settings.sonoffHostname;
+}
+
 
 
 

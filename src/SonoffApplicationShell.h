@@ -39,7 +39,7 @@ class SonoffApplicationShell
     
     EEPROMSettings sonoffSettings{};
     
-    OTAUpdate otaUpdate{sonoffSettings.mqttServer(), sonoffSettings.mqttClientID()};
+    OTAUpdate otaUpdate{sonoffSettings.sonoffHostname(), sonoffSettings.mqttClientID()};
     
     SonoffWifi wifi{sonoffSettings};
     
