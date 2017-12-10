@@ -36,3 +36,12 @@ MQTT inbound channel, backport tests
  - then add ability to respond to broadcast
  - and operate on specific client ID (this is the bit that needs tests)
 
+
+EEPROM settings
+ - backport tests and slit the load/save out of the class
+
+SonoffWifi
+ - need to decouple from the settings
+ - use setters on settings instead of passing in a settings object
+ - maybe need a virtual class for the eeprom settings
+
