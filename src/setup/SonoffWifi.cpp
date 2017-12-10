@@ -60,26 +60,32 @@ ticker.attach(0.6, tick);
   wifiManager.setConfigPortalTimeout(180);
 
 
+  WiFiManagerParameter custom_boot_state_text("<br/>Boot state on or off");
+  wifiManager.addParameter(&custom_boot_state_text);
   WiFiManagerParameter custom_boot_state("boot-state", "on/off on boot", sonoffSettings.bootState()?"on":"off", 33);
   wifiManager.addParameter(&custom_boot_state);
 
   sonoffSettings.debugDump();
   
-  WiFiManagerParameter custom_mqtt_text("<br/>MQTT config. <br/> No url to disable.<br/>");
+  WiFiManagerParameter custom_mqtt_text("<br/>MQTT hostname and port");
   wifiManager.addParameter(&custom_mqtt_text);
-
   WiFiManagerParameter custom_mqtt_hostname("mqtt-hostname", "Hostname", sonoffSettings.mqttServer(), 33);
   wifiManager.addParameter(&custom_mqtt_hostname);
-
   WiFiManagerParameter custom_mqtt_port("mqtt-port", "port", sonoffSettings.mqttPort(), 6);
   wifiManager.addParameter(&custom_mqtt_port);
 
+
+  WiFiManagerParameter custom_mqtt_client_text("<br/>MQTT client ID and topic");
+  wifiManager.addParameter(&custom_mqtt_client_text);
   WiFiManagerParameter custom_mqtt_client_id("mqtt-client-id", "Client ID", sonoffSettings.mqttClientID(), 24);
   wifiManager.addParameter(&custom_mqtt_client_id);
-
   WiFiManagerParameter custom_mqtt_topic("mqtt-topic", "Topic", sonoffSettings.mqttTopic(), 33);
   wifiManager.addParameter(&custom_mqtt_topic);
 
+
+
+  WiFiManagerParameter custom_sonoff_hostname_text("<br/>SONOFF Hostname");
+  wifiManager.addParameter(&custom_sonoff_hostname_text);
   WiFiManagerParameter custom_sonoff_hostname("sonoff-hostname", "SonoffHostname", sonoffSettings.sonoffHostname(), 10);
   wifiManager.addParameter(&custom_sonoff_hostname);
 

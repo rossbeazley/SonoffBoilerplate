@@ -25,11 +25,7 @@ OTAUpdate::OTAUpdate(char* hostname, char* clientId) : hostname(hostname), clien
     else if (error == OTA_END_ERROR) Serial.println("End Failed");
   });
 
-
-  char otaHostname[50];
-  sprintf(otaHostname, "%s-%s", hostname, clientId);
-
-  ArduinoOTA.setHostname(otaHostname);
+  ArduinoOTA.setHostname(hostname);
 
   ArduinoOTA.begin();
 }

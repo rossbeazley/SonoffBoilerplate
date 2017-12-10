@@ -32,10 +32,7 @@ Relay and GPIORelayImpl
 ApplicationCore
 
 
-Next up, split the mqtt stuff into
-A) a client that maintains connection
-B) an outbound channel that posts to this client
-C) an inbound channel that receives topic payloads
-
-
+MQTT inbound channel, backport tests
+ - then add ability to respond to broadcast
+ - and operate on specific client ID (this is the bit that needs tests)
 
