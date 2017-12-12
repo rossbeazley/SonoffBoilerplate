@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 
-MQTTInbound::MQTTInbound(char * topic, RelayLightSwitch * appcore) :
+MQTTInbound::MQTTInbound(char * topic, LightSwitch * appcore) :
   mqttTopic{topic}
   , appCore{appcore}
 {
@@ -34,6 +34,7 @@ void MQTTInbound::message(String topic, String payload)
   if (topic == this->mqttTopic) {
     Serial.println("exact match");
     //no commands in topic so fast exit
+    // BETER STILL, TAKE thiS AS A BROADCAST MESSAGE so act on command
     return;
   }
 
@@ -41,7 +42,7 @@ void MQTTInbound::message(String topic, String payload)
   {
     Serial.println("for this device");
 
-    // strip the topic from the start of the message, suggests topic shouldnt be known in this method
+    // strip the topic from the start of the message, suggests topic shouldnt be known in this method, not if we are using it for a broadcast tho
     topic = topic.substring(strlen(this->mqttTopic) + 1);
 
     //TODO need to put channel ID in config
@@ -59,6 +60,7 @@ void MQTTInbound::message(String topic, String payload)
     //AND MAKE THE CHANNEL ID CONFIGURABLE
     //AND STASH IN THE EEPROMSettings
 
+    //BETER STILL, USE THE HOSTNAME!
 
     if (payload == "on") {
       this->appCore->externalOn();
