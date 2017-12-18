@@ -1,0 +1,12 @@
+Wed Dec 13 20:50:53 2017
+Version: 1.21 for DOS
+
+Initializing All Modules...
+---------------------------
+Initializing Allegro... OK
+Installing Timers... OK
+Installing Keyboard... OK
+Installing Mouse... OK
+Loading Preferences... OK
+Trying Windowed Graphics Mode... OK
+Loading Data File... Error loading scantool.dat!

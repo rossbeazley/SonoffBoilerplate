@@ -1,7 +1,6 @@
 #pragma once
-#include <ESP8266WiFi.h>
-#include <PubSubClient.h>
-#include "RelayLightSwitch.h"
+#include <Arduino.h>
+#include "../RelayLightSwitch.h"
 
 class MQTTInbound
 {
@@ -12,6 +11,6 @@ class MQTTInbound
   private:
     char * mqttTopic;
     LightSwitch* appCore;
-    
+
 };
 

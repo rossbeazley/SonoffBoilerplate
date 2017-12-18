@@ -23,7 +23,6 @@ unsigned long millis(void);
 void attachInterrupt(uint8_t pin, void (*fp)(void), int mode);
 void detachInterrupt(uint8_t pin);
 
-
 class MockStream {
 public:
 	void println(const char *msg);

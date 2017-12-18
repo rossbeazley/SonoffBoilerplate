@@ -10,6 +10,7 @@ SonoffApplicationShell::SonoffApplicationShell()
 
   //Add a debug observer
   this->myCore.addObserver(&sd);
+  this->myCore.addObserver(&outbound);
   
   Serial.println("Constructed app shell");
 }

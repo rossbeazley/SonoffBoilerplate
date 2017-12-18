@@ -1,27 +1,26 @@
 
 #include "MQTTOutbound.h"
+#include<stdio.h>
 
-/*
- * 
- * 
- * Take in instance of the MQTTConnection and publish to that
- * 
- * 
- * 
- * 
- */
-
-MQTTOutbound::MQTTOutbound(char * mqttTopic, MQTTConnection& connection) :
+MQTTOutbound::MQTTOutbound(char * mqttTopic, PublishChannel& connection) :
                                               _mqttTopic{mqttTopic}
                                               ,mqttConnection(connection)
 {
   
 }
 
-void MQTTOutbound::updateMQTT(int channel, int state) {
+void MQTTOutbound::updateMQTT(int channel, const char*  stateString) {
   char topic[50];
   sprintf(topic, "%s/channel-%d/status", _mqttTopic, channel);
-  String stateString = state == 0 ? "off" : "on";
   this->mqttConnection.publish(topic, stateString);
 }
 
+void MQTTOutbound::ON()
+{
+  this->updateMQTT(0,"on");
+}
+
+void MQTTOutbound::OFF()
+{
+  this->updateMQTT(0,"off");
+}

@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 #include <Arduino.h>
-#include "../src/InteruptGPIOButton.h"
+#include "../src/buttons/InteruptGPIOButton.h"
 
 class CapturingButton : public AbstractButton
 { 

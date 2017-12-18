@@ -2,6 +2,8 @@
 #include "catch.hpp"
 
 #include "../src/mqtt/MQTTInbound.h"
+#include "../src/RelayLightSwitch.h"
+
 class CapturingLightSwitch : public LightSwitch
 { 
 	public:

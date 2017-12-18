@@ -11,6 +11,7 @@
 #include "mqtt/MQTTOutbound.h"
 #include "mqtt/MQTTInbound.h"
 #include "mqtt/MQTTConnection.h"
+#include "mqtt/MQTTPubSubClientConnection.h"
 
 #include "buttons/DebouncedGPIO.h"
 
