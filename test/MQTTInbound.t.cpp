@@ -27,8 +27,8 @@ class CapturingLightSwitch : public LightSwitch
 TEST_CASE("Broadcasts", "[MQTTInbound]" ) {
 
 	CapturingLightSwitch cls{};
-	char *topicString = "topic";	
-	MQTTInbound mqttInbound{topicString,cls};
+	const char * topicString = const_cast<char *>("topic");	
+	MQTTInbound mqttInbound{topicString, &cls};
 
 	SECTION("Preconditions") {
 		REQUIRE( cls.state == 0);

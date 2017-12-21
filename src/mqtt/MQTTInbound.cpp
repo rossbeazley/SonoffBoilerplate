@@ -2,7 +2,7 @@
 #include <Arduino.h>
 
 
-MQTTInbound::MQTTInbound(char * topic, LightSwitch * appcore) :
+MQTTInbound::MQTTInbound(const char * topic, LightSwitch * appcore) :
   mqttTopic{topic}
   , appCore{appcore}
 {

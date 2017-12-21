@@ -33,6 +33,10 @@ int digitalRead(int pin) {
 	return spyPinState[pin];
 }
 
+void MockStream::print(const char *msg) {
+	std::cout << "Serial.println(" << msg << ")";
+}
+
 void MockStream::println(const char *msg) {
 	std::cout << "Serial.println(" << msg << ")" << std::endl;
 }

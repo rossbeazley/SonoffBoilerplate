@@ -5,11 +5,11 @@
 class MQTTInbound
 {
   public:
-    MQTTInbound(char * topic, LightSwitch * appcore);
+    MQTTInbound(const char * topic, LightSwitch * appcore);
     void message(String topic, String payload);
 
   private:
-    char * mqttTopic;
+    const char * mqttTopic;
     LightSwitch* appCore;
 
 };

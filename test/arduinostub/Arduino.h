@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include "WString.h"
 
 #define HIGH (1)
 
@@ -25,6 +26,7 @@ void detachInterrupt(uint8_t pin);
 
 class MockStream {
 public:
+	void print(const char *msg);
 	void println(const char *msg);
 	void println(int value);
 private:
