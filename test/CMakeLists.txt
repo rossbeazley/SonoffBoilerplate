@@ -1,9 +1,10 @@
-add_library(arduinostub arduinostub/Arduino.cpp)
-add_library(pgmspace arduinostub/pgmspace.cpp)
-add_library(WString arduinostub/WString.cpp)
-add_library(stdlib_noniso arduinostub/stdlib_noniso.h)
-SET_TARGET_PROPERTIES(stdlib_noniso PROPERTIES LINKER_LANGUAGE C++)
 
+add_library(arduinostub arduinostub/Arduino.cpp)
+#add_library(pgmspace arduinostub/pgmspace.cpp)
+#add_library(SString arduinostub/WString.cpp)
+add_library(SString arduinostub/SString.cpp)
+#add_library(stdlib_noniso arduinostub/stdlib_noniso.h)
+#SET_TARGET_PROPERTIES(stdlib_noniso PROPERTIES LINKER_LANGUAGE C++)
 target_include_directories(arduinostub PUBLIC arduinostub/)
 
 #add_executable(MQTTOutbound_test ../src/mqtt/MQTTOutbound.h ../src/mqtt/MQTTOutbound.cpp ../src/mqtt/MQTTConnection.h ../src/RelayLightSwitch.h MQTTOutbound.t.cpp)
@@ -22,7 +23,7 @@ add_executable(MQTTInbound_test ../src/mqtt/MQTTInbound.h ../src/mqtt/MQTTInboun
 #target_link_libraries(InteruptButton_test PRIVATE arduinostub)
 #target_link_libraries(DebouncedGPIO_test PRIVATE arduinostub)
 
-target_link_libraries(MQTTInbound_test PRIVATE arduinostub WString stdlib_noniso)
+target_link_libraries(MQTTInbound_test PRIVATE arduinostub SString )
 
 add_test(NAME MQTTInbound_test COMMAND MQTTInbound_test)
 #add_test(NAME MQTTOutbound_test COMMAND MQTTOutbound_test)
