@@ -1,7 +1,7 @@
 #pragma once
 
 #include <map>
-#include "WString.h"
+#include "SString.h"
 
 #define HIGH (1)
 
@@ -29,6 +29,7 @@ public:
 	void print(const char *msg);
 	void println(const char *msg);
 	void println(int value);
+	void println(String & msg);
 private:
 };
 

@@ -1,54 +1,73 @@
 #include "SString.h"
-
-
+#include <stdlib.h>
 
 String::String(const char *cstr = "")
 {
-    
+    this->pString = std::string(cstr);
 }
 
 
 String::String(const String &value) {
-    //*this = value;
+    this->pString = value.pString;
 }
 
 String::~String()
 {
-
+    //this->pString = nul;
 }
 
 
 char String::charAt(unsigned int index) const
 {
-    const char result = ' ';
-    return result;
+    return this->pString.c_str()[index];
 }
 
 String String::substring(unsigned int beginIndex, unsigned int endIndex) const
 {
     //const char *result = " ";
-    String result;
-    return result;
+    String s{};
+    s.pString = this->pString.substr(beginIndex, endIndex);
+    return s;
 }
 
 unsigned char String::startsWith(const String &prefix) const
 {
-    const char result = ' ';
-    return result;
+    std::string t = prefix.pString;
+    return this->pString.compare(0, t.length(), t) == 0;    
 }
         
 String & String::operator =(String &&rval) {
+    this->pString = rval.pString;
     return *this;
 }
 
 
 void String::replace(const String& find, const String& replace) {
+    
+    
+    int indexFrom = this->pString.find_first_of(find.pString);
+    int numberOfChars = find.pString.length();
+
+    this->pString.replace(indexFrom, numberOfChars, replace.pString);
 }
 
 long String::toInt(void) const {
-    return 0;
+    return atoi(this->pString.c_str());
+    
 }
 
 unsigned char String::equals(const char *cstr) const {
-    return 0 == 0;
+    String that{cstr};
+    return that.pString == this->pString;
+    
+}
+
+unsigned char String::operator ==(const char *cstr) const {
+    String that{cstr};
+    return that.pString == this->pString;
+    
+}
+
+unsigned int String::length(void) const {
+    return this->pString.length();
 }

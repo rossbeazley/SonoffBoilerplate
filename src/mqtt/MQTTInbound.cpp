@@ -47,6 +47,7 @@ void MQTTInbound::message(String topic, String payload)
 
     //TODO need to put channel ID in config
     String channelString = getValue(topic, '/', 0);
+    Serial.println(channelString);
     if (!channelString.startsWith("channel-")) {
       Serial.println("no channel");
       return;

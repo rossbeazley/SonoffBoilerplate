@@ -1,5 +1,7 @@
-
+# core arduino stub
 add_library(arduinostub arduinostub/Arduino.cpp)
+
+# arduino string stub support
 #add_library(pgmspace arduinostub/pgmspace.cpp)
 #add_library(SString arduinostub/WString.cpp)
 add_library(SString arduinostub/SString.cpp)
@@ -23,7 +25,7 @@ add_executable(MQTTInbound_test ../src/mqtt/MQTTInbound.h ../src/mqtt/MQTTInboun
 #target_link_libraries(InteruptButton_test PRIVATE arduinostub)
 #target_link_libraries(DebouncedGPIO_test PRIVATE arduinostub)
 
-target_link_libraries(MQTTInbound_test PRIVATE arduinostub SString )
+target_link_libraries(MQTTInbound_test PRIVATE arduinostub SString)
 
 add_test(NAME MQTTInbound_test COMMAND MQTTInbound_test)
 #add_test(NAME MQTTOutbound_test COMMAND MQTTOutbound_test)

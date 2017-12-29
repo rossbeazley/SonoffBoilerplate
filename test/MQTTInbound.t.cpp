@@ -4,26 +4,51 @@
 #include "../src/mqtt/MQTTInbound.h"
 #include "../src/RelayLightSwitch.h"
 
+
+const int UNSET = 0;
+const int ON = 1;
+const int OFF = 2;
+const int TOGGLE = 3;
+
 class CapturingLightSwitch : public LightSwitch
 { 
 	public:
-		int state = 0;
+		int state = UNSET;
 		CapturingLightSwitch() { };
 		void externalOn()
 		{
-			state=1;
+			state=ON;
 		};
 		void externalOff()
 		{
-			state=2;
+			state=OFF;
 		};
 		void externalToggle()
 		{
-			state=4;
+			state=TOGGLE;
 		};
 
 };
 
+TEST_CASE("Legacy", "[MQTTInbound]") {
+	CapturingLightSwitch cls{};
+	const char * topicString = const_cast<char *>("topic");	
+	MQTTInbound mqttInbound{topicString, &cls};
+
+	SECTION("Preconditions") {
+		REQUIRE( cls.state == UNSET);
+	}
+	
+	
+
+	SECTION("On Message to topic without hostname") {
+		mqttInbound.message("topic/channel-0","on");
+
+		REQUIRE( cls.state == ON);
+	}
+
+}
+/*
 TEST_CASE("Broadcasts", "[MQTTInbound]" ) {
 
 	CapturingLightSwitch cls{};
@@ -31,34 +56,34 @@ TEST_CASE("Broadcasts", "[MQTTInbound]" ) {
 	MQTTInbound mqttInbound{topicString, &cls};
 
 	SECTION("Preconditions") {
-		REQUIRE( cls.state == 0);
+		REQUIRE( cls.state == UNSET);
 	}
 	
 	
 
 	SECTION("On Message to topic without hostname") {
 
-		REQUIRE( cls.state == 1);
+		REQUIRE( cls.state == ON);
 	}
 
 	SECTION("Off Message to topic without hostname") {
 
-		REQUIRE( cls.state == 2);
+		REQUIRE( cls.state == OFF);
 	}
 
 	SECTION("Toggle Message to topic without hostname") {
 
-		REQUIRE( cls.state == 4);
+		REQUIRE( cls.state == TOGGLE);
 	}
 
 }
-
-
+*/
+/*
 TEST_CASE("Messages for our hostname", "[MQTTInbound]" ) {
 
 	CapturingLightSwitch cls{};	
 	SECTION("Preconditions") {
-		REQUIRE( cls.state == 0);
+		REQUIRE( cls.state == UNSET);
 	}
 
 	
@@ -103,3 +128,4 @@ TEST_CASE("Messages for other hostnames", "[MQTTInbound]" ) {
 		REQUIRE( cls.state == 4);
 	}
 }
+*/

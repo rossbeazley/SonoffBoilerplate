@@ -45,6 +45,10 @@ void MockStream::println(int value) {
 	std::cout << "Serial.println(" << value << ")" << std::endl;
 }
 
+void MockStream::println(String & msg){
+	std::cout << "Serial.println(" << msg.pString << ")" << std::endl;
+}
+
 MockStream Serial;
 std::map<int, int> spyPinState;
 std::map<int, int> spyPinMode;
