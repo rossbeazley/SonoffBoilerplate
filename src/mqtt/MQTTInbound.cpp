@@ -35,10 +35,19 @@ void MQTTInbound::message(String topic, String payload)
     Serial.println("exact match");
     //no commands in topic so fast exit
     // BETER STILL, TAKE thiS AS A BROADCAST MESSAGE so act on command
-    return;
-  }
+    //return;
+        if (payload == "on") {
+      this->appCore->externalOn();
+    }
+    if (payload == "off") {
+      this->appCore->externalOff();
+    }
+    if (payload == "toggle") {
+      this->appCore->externalToggle();
+    }
 
-  if (topic.startsWith(this->mqttTopic))
+  }
+  else if (topic.startsWith(this->mqttTopic))
   {
     Serial.println("for this device");
 
@@ -50,12 +59,12 @@ void MQTTInbound::message(String topic, String payload)
     Serial.println(channelString);
     if (!channelString.startsWith("channel-")) {
       Serial.println("no channel");
-      return;
-    }
+     // return;
+    } else {
     channelString.replace("channel-", "");
     int channel = channelString.toInt();
     Serial.println(channel);
-
+    }
     //NEED TO DO SOMETHING WITH CHANNEL
     //LIKE CHECK THE MESSAGE IS FOR OUR CHANNEL
     //AND MAKE THE CHANNEL ID CONFIGURABLE
