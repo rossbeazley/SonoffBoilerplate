@@ -25,6 +25,12 @@ public:
     }
     ;
     int indexOf(const String &str) const;
+
+    int indexOf(char ch, unsigned int fromIndex) const;
+    int indexOf(char ch) const {
+        return indexOf(ch, 0);
+    };
+    
     std::string pString;
 
 private:

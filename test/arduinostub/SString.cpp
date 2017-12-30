@@ -75,3 +75,7 @@ unsigned int String::length(void) const {
 int String::indexOf(const String &str) const {
     return this->pString.find_first_of(str.pString);
 }
+
+int String::indexOf(char ch, unsigned int fromIndex) const {
+    return this->pString.find_first_of(ch,fromIndex);
+}

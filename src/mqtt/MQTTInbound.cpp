@@ -10,24 +10,6 @@ MQTTInbound::MQTTInbound(const char * topic, LightSwitch * appcore, const char *
 
 }
 
-//http://stackoverflow.com/questions/9072320/split-string-into-string-array
-String getValue(String data, char separator, int index)
-{
-  int found = 0;
-  int strIndex[] = {0, -1};
-  int maxIndex = data.length() - 1;
-
-  for (int i = 0; i <= maxIndex && found <= index; i++) {
-    if (data.charAt(i) == separator || i == maxIndex) {
-      found++;
-      strIndex[0] = strIndex[1] + 1;
-      strIndex[1] = (i == maxIndex) ? i + 1 : i;
-    }
-  }
-
-  return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
-}
-
 void MQTTInbound::message(String topic, String payload)
 {
 
@@ -43,7 +25,9 @@ void MQTTInbound::message(String topic, String payload)
     topic = topic.substring(strlen(this->mqttTopic) + 1);
 
     //TODO need to put channel ID in config
-    String channelString = getValue(topic, '/', 0);
+      int found = topic.indexOf('/');
+      String channelString = topic.substring(0,found);
+    
     Serial.println(channelString);
     if (!channelString.equals(this->hostname)) {
       Serial.print("dosnt match hostname: ");
