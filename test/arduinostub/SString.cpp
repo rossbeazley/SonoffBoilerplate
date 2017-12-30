@@ -71,3 +71,7 @@ unsigned char String::operator ==(const char *cstr) const {
 unsigned int String::length(void) const {
     return this->pString.length();
 }
+
+int String::indexOf(const String &str) const {
+    return this->pString.find_first_of(str.pString);
+}

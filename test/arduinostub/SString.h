@@ -24,7 +24,7 @@ public:
             return substring(beginIndex, length());
     }
     ;
-
+    int indexOf(const String &str) const;
     std::string pString;
 
 private:

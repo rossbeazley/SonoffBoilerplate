@@ -28,22 +28,12 @@ String getValue(String data, char separator, int index)
   return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
-
 void MQTTInbound::message(String topic, String payload)
 {
 
   if (topic == this->mqttTopic) {
     Serial.println("exact match, is a topic broadcast");
-    if (payload == "on") {
-      this->appCore->externalOn();
-    }
-    else if (payload == "off") {
-      this->appCore->externalOff();
-    }
-    else if (payload == "toggle") {
-      this->appCore->externalToggle();
-    }
-
+    this->processCommand(payload);
   }
   else if (topic.startsWith(this->mqttTopic))
   {
@@ -60,16 +50,7 @@ void MQTTInbound::message(String topic, String payload)
       Serial.println(this->hostname);
       return;
     }
-    
-    if (payload == "on") {
-      this->appCore->externalOn();
-    }
-    if (payload == "off") {
-      this->appCore->externalOff();
-    }
-    if (payload == "toggle") {
-      this->appCore->externalToggle();
-    }
+    this->processCommand(payload);
 
     // TODO remodel this
     //      if(payload == "") {
@@ -85,3 +66,16 @@ void MQTTInbound::message(String topic, String payload)
 }
 
 
+
+void MQTTInbound::processCommand(String payload)
+{
+  if (payload == "on") {
+      this->appCore->externalOn();
+    }
+    else if (payload == "off") {
+      this->appCore->externalOff();
+    }
+    else if (payload == "toggle") {
+      this->appCore->externalToggle();
+    }
+}

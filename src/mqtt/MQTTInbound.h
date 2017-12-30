@@ -5,13 +5,14 @@
 class MQTTInbound
 {
   public:
-    MQTTInbound(const char * topic, LightSwitch * appcore, const char * hostname = "channel-0");
+    MQTTInbound(const char * topic, LightSwitch * appcore, const char * hostname);
     void message(String topic, String payload);
 
   private:
     const char * mqttTopic;
     const char * hostname;
     LightSwitch* appCore;
+    void processCommand(String payload);
 
 };
 
