@@ -2,9 +2,10 @@
 #include <Arduino.h>
 
 
-MQTTInbound::MQTTInbound(const char * topic, LightSwitch * appcore) :
+MQTTInbound::MQTTInbound(const char * topic, LightSwitch * appcore, const char * hostname) :
   mqttTopic{topic}
   , appCore{appcore}
+  , hostname{hostname}
 {
 
 }
@@ -32,17 +33,14 @@ void MQTTInbound::message(String topic, String payload)
 {
 
   if (topic == this->mqttTopic) {
-    Serial.println("exact match");
-    //no commands in topic so fast exit
-    // BETER STILL, TAKE thiS AS A BROADCAST MESSAGE so act on command
-    //return;
-        if (payload == "on") {
+    Serial.println("exact match, is a topic broadcast");
+    if (payload == "on") {
       this->appCore->externalOn();
     }
-    if (payload == "off") {
+    else if (payload == "off") {
       this->appCore->externalOff();
     }
-    if (payload == "toggle") {
+    else if (payload == "toggle") {
       this->appCore->externalToggle();
     }
 
@@ -57,21 +55,12 @@ void MQTTInbound::message(String topic, String payload)
     //TODO need to put channel ID in config
     String channelString = getValue(topic, '/', 0);
     Serial.println(channelString);
-    if (!channelString.startsWith("channel-")) {
-      Serial.println("no channel");
-     // return;
-    } else {
-    channelString.replace("channel-", "");
-    int channel = channelString.toInt();
-    Serial.println(channel);
+    if (!channelString.equals(this->hostname)) {
+      Serial.print("dosnt match hostname: ");
+      Serial.println(this->hostname);
+      return;
     }
-    //NEED TO DO SOMETHING WITH CHANNEL
-    //LIKE CHECK THE MESSAGE IS FOR OUR CHANNEL
-    //AND MAKE THE CHANNEL ID CONFIGURABLE
-    //AND STASH IN THE EEPROMSettings
-
-    //BETER STILL, USE THE HOSTNAME!
-
+    
     if (payload == "on") {
       this->appCore->externalOn();
     }
