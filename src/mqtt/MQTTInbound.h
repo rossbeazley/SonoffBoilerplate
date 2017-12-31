@@ -1,7 +1,7 @@
 #pragma once
 #include <Arduino.h>
 #include "../RelayLightSwitch.h"
-
+#include "MQTTInboundCommand.h"
 class MQTTInbound
 {
   public:
@@ -11,7 +11,7 @@ class MQTTInbound
   private:
     const char * mqttTopic;
     const char * hostname;
-    LightSwitch* appCore;
+    MQTTInboundCommand * commandProcessor = nullptr;
     void processCommand(String payload);
 
 };

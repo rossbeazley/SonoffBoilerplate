@@ -4,10 +4,9 @@
 
 MQTTInbound::MQTTInbound(const char * topic, LightSwitch * appcore, const char * hostname) :
   mqttTopic{topic}
-  , appCore{appcore}
   , hostname{hostname}
 {
-
+  this->commandProcessor = new MQTTInboundCommand{appcore};
 }
 
 void MQTTInbound::message(String topic, String payload)
@@ -15,7 +14,7 @@ void MQTTInbound::message(String topic, String payload)
 
   if (topic == this->mqttTopic) {
     Serial.println("exact match, is a topic broadcast");
-    this->processCommand(payload);
+    this->commandProcessor->processCommand(payload);
   }
   else if (topic.startsWith(this->mqttTopic))
   {
@@ -34,7 +33,7 @@ void MQTTInbound::message(String topic, String payload)
       Serial.println(this->hostname);
       return;
     }
-    this->processCommand(payload);
+    this->commandProcessor->processCommand(payload);
 
     // TODO remodel this
     //      if(payload == "") {
@@ -49,17 +48,3 @@ void MQTTInbound::message(String topic, String payload)
   }
 }
 
-
-// should really move this to its own class
-void MQTTInbound::processCommand(String payload)
-{
-  if (payload == "on") {
-      this->appCore->externalOn();
-    }
-    else if (payload == "off") {
-      this->appCore->externalOff();
-    }
-    else if (payload == "toggle") {
-      this->appCore->externalToggle();
-    }
-}
