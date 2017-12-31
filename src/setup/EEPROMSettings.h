@@ -1,4 +1,5 @@
 #pragma once
+#define EEPROM_SALT 13000
 
 typedef struct {
   char  bootState[4]      = "off";
@@ -7,7 +8,7 @@ typedef struct {
   char  mqttClientID[24]  = "";
   char  mqttTopic[33]     = "sonoff";
   char  sonoffHostname[10] = "host1";
-  int   salt              = 13000;
+  int   salt              = EEPROM_SALT;
 } WMSettings;
 
 
@@ -23,7 +24,7 @@ class EEPROMSettings
     bool  bootState();
     char* mqttServer();
     char*  mqttPort();
-    char* mqttClientID(); //this can be dropped
+    char* mqttClientID(); //this can be
     char* sonoffHostname();
   private:
       WMSettings settings;

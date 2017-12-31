@@ -50,7 +50,7 @@ void MQTTInbound::message(String topic, String payload)
 }
 
 
-
+// should really move this to its own class
 void MQTTInbound::processCommand(String payload)
 {
   if (payload == "on") {
