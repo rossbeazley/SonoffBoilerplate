@@ -1,5 +1,5 @@
 #include "MQTTPubSubClientConnection.h"
-#include <Arduino.h>
+
 
 int         lastMQTTConnectionAttempt = 0;
 
@@ -95,7 +95,7 @@ void MQTTConnection::mqttCallback(const MQTT::Publish& pub) {
   }
 }
 
-void MQTTConnection::publish(const char* topic, const char* payload)
+void MQTTConnection::publish(String topic, String payload)
 {
   Serial.print("About to publsh ");
   Serial.print(topic);

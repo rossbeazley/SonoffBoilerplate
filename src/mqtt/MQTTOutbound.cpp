@@ -2,8 +2,9 @@
 #include "MQTTOutbound.h"
 #include<stdio.h>
 
-MQTTOutbound::MQTTOutbound(char * mqttTopic, PublishChannel& connection) :
+MQTTOutbound::MQTTOutbound(char * mqttTopic, char * hostname, PublishChannel& connection) :
                                               _mqttTopic{mqttTopic}
+                                              ,_hostname{hostname}
                                               ,mqttConnection(connection)
 {
   
@@ -11,7 +12,7 @@ MQTTOutbound::MQTTOutbound(char * mqttTopic, PublishChannel& connection) :
 
 void MQTTOutbound::updateMQTT(int channel, const char*  stateString) {
   char topic[50];
-  sprintf(topic, "%s/channel-%d/status", _mqttTopic, channel);
+  sprintf(topic, "%s/%s/status", _mqttTopic, _hostname);  
   this->mqttConnection.publish(topic, stateString);
 }
 

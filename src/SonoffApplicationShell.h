@@ -53,7 +53,7 @@ class SonoffApplicationShell
     MQTTInbound inbound{sonoffSettings.mqttTopic(), &myCore, sonoffSettings.sonoffHostname()};
     
     MQTTConnection mttConnection{sonoffSettings.mqttServer(), atoi(sonoffSettings.mqttPort()), sonoffSettings.mqttClientID(),sonoffSettings.mqttTopic(), &inbound};
-    MQTTOutbound outbound{sonoffSettings.mqttTopic(), mttConnection}; //NEED TO WIRE THIS UP AS AN OBSERVER
+    MQTTOutbound outbound{sonoffSettings.mqttTopic(), sonoffSettings.sonoffHostname(), mttConnection}; //NEED TO WIRE THIS UP AS AN OBSERVER
     
     DebouncedGPIO debouncedButton{myCore};
     InteruptGPIOButton interuptButton{debouncedButton};

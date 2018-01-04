@@ -1,8 +1,10 @@
 #pragma once
 
+#include <Arduino.h>
+
 class PublishChannel
 {
   public:
-    virtual void publish(const char* topic, const char* payload) = 0;
+    virtual void publish(String topic, String payload) = 0;
 
 };

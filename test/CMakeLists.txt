@@ -39,4 +39,4 @@ add_test(NAME InteruptButton_test COMMAND InteruptButton_test)
 add_test(NAME GPIORelay_test COMMAND GPIORelay_test)
 add_test(NAME DebouncedGPIO_test COMMAND DebouncedGPIO_test)
 
-#add_test(NAME MQTTOutbound_test COMMAND MQTTOutbound_test)
+add_test(NAME MQTTOutbound_test COMMAND MQTTOutbound_test) 

@@ -30,6 +30,11 @@ String String::substring(unsigned int beginIndex, unsigned int endIndex) const
     return s;
 }
 
+
+const char* String::c_str() const {
+    return this->pString.c_str();
+}
+
 unsigned char String::startsWith(const String &prefix) const
 {
     std::string t = prefix.pString;
@@ -37,6 +42,11 @@ unsigned char String::startsWith(const String &prefix) const
 }
         
 String & String::operator =(String &&rval) {
+    this->pString = rval.pString;
+    return *this;
+}
+        
+String & String::operator =(const String &rval) {
     this->pString = rval.pString;
     return *this;
 }
@@ -65,7 +75,10 @@ unsigned char String::equals(const char *cstr) const {
 unsigned char String::operator ==(const char *cstr) const {
     String that{cstr};
     return that.pString == this->pString;
-    
+}
+
+unsigned char String::operator ==(String &rval) const {
+    return rval.pString == this->pString;
 }
 
 unsigned int String::length(void) const {
