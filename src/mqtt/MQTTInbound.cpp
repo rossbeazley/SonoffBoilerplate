@@ -23,17 +23,19 @@ void MQTTInbound::message(String topic, String payload)
     // strip the topic from the start of the message, suggests topic shouldnt be known in this method, not if we are using it for a broadcast tho
     topic = topic.substring(strlen(this->mqttTopic) + 1);
 
-    //TODO need to put channel ID in config
-      int found = topic.indexOf('/');
-      String channelString = topic.substring(0,found);
-    
-    Serial.println(channelString);
-    if (!channelString.equals(this->hostname)) {
-      Serial.print("dosnt match hostname: ");
-      Serial.println(this->hostname);
-      return;
+    if(topic == this->hostname) {
+this->commandProcessor->processCommand(payload);
     }
-    this->commandProcessor->processCommand(payload);
+    //   int found = topic.indexOf('/');
+    //   String channelString = topic.substring(0,found);
+    
+    // Serial.println(channelString);
+    // if (!channelString.equals(this->hostname)) {
+    //   Serial.print("dosnt match hostname: ");
+    //   Serial.println(this->hostname);
+    //   return;
+    // }
+    
 
     // TODO remodel this
     //      if(payload == "") {

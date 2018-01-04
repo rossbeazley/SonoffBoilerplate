@@ -34,6 +34,7 @@ WMSettings EEPROMSettings::load()
 
 void EEPROMSettings::save(WMSettings settings)
 {
+    settings.configured = true;
     EEPROM.begin(512);
     EEPROM.put(0, settings);
     EEPROM.end();
@@ -48,6 +49,7 @@ void EEPROMSettings::debugDump()
   Serial.println(this->settings.mqttClientID);
   Serial.println(this->settings.mqttTopic);
   Serial.println(this->settings.sonoffHostname);
+  Serial.println(this->settings.configured);
 }
 
 char* EEPROMSettings::mqttTopic()
@@ -80,6 +82,9 @@ char*  EEPROMSettings::sonoffHostname()
   return this->settings.sonoffHostname;
 }
 
-
+bool EEPROMSettings::configured()
+{
+  return this->settings.configured;
+}
 
 

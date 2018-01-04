@@ -138,3 +138,19 @@ TEST_CASE("Messages for other hostnames", "[MQTTInbound]" ) {
 		REQUIRE( cls.state == UNSET);
 	}
 }
+
+TEST_CASE("Broadcast storm","[MQTTInbound]") {
+
+	CapturingLightSwitch cls{};	
+	const char * topicString = const_cast<char *>("loungeLights");	
+	MQTTInbound mqttInbound{topicString, &cls, "corner"};
+
+	SECTION("Preconditions") {
+		REQUIRE( cls.state == UNSET);
+	}
+	
+	SECTION("Status broadcast message is ignored") {
+		mqttInbound.message("loungeLights/corner/status","on");
+		REQUIRE( cls.state == UNSET);
+	}
+}

@@ -5,6 +5,8 @@
     "files.associations": {
         "*.tcc": "cpp",
         "cstring": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "functional": "cpp",
+        "type_traits": "cpp"
     }
 }

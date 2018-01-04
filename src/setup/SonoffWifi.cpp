@@ -43,6 +43,11 @@ SonoffWifi::SonoffWifi(EEPROMSettings & sonoffSettings)
 
 Serial.println("Constructing wifi");
   
+  if(! sonoffSettings.configured()) {
+    WiFi.disconnect();
+    delay(1000);
+  }
+
     const char *hostname = sonoffSettings.mqttTopic();
   //set led pin as output
 
@@ -120,6 +125,7 @@ Serial.println("Wifi about to connect");
 
     sonoffSettings.save(newSettings);
     
+    ESP.restart();
   }
 
   ticker.detach();

@@ -50,7 +50,7 @@ void MQTTConnection::connectToMQTT()
       char topic[50];
       //sprintf(topic, "%s/+/+", settings.mqttTopic);
       //mqttClient.subscribe(topic);
-      sprintf(topic, "%s/+", this->mqttTopic);
+      sprintf(topic, "%s/#", this->mqttTopic);
       Serial.print("subscribing to ");
       Serial.println(topic);
       this->mqttClient.subscribe(topic);
