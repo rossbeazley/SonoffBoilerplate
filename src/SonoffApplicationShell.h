@@ -17,6 +17,8 @@
 
 #include <OTAUpdate.h>
 
+#include "debug/SerialLog.h"
+
 class StateDebug : public RelayLightSwitchObserver
 {
   public:
@@ -38,11 +40,13 @@ class SonoffApplicationShell
   private:
     StateDebug sd{};
     
+    SerialLog log{};
+
     EEPROMSettings sonoffSettings{};
     
     OTAUpdate otaUpdate{sonoffSettings.sonoffHostname(), sonoffSettings.mqttClientID()};
     
-    SonoffWifi wifi{sonoffSettings};
+    SonoffWifi wifi{sonoffSettings, log};
     
     GPIORelay relay{12};
     

@@ -1,11 +1,12 @@
 #pragma once
 #include "EEPROMSettings.h"
-#include <ESP8266WiFi.h>
+#include "debug/Log.h"
+
 
 class SonoffWifi
 {
   public:
-    SonoffWifi(EEPROMSettings&);
+    SonoffWifi(EEPROMSettings&, Log&);
   
 };
 

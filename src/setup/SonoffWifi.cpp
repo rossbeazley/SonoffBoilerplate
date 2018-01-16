@@ -38,12 +38,15 @@ void saveConfigCallback () {
   shouldSaveConfig = true;
 }
 
-SonoffWifi::SonoffWifi(EEPROMSettings & sonoffSettings)
+SonoffWifi::SonoffWifi(EEPROMSettings & sonoffSettings, Log & log)
 {
 
-Serial.println("Constructing wifi");
+log.println("Constructing wifi");
   
   if(! sonoffSettings.configured()) {
+
+  log.println("WiFi.disconnect()` due to  sonoffSettings.configured()");
+  
     WiFi.disconnect();
     delay(1000);
   }
@@ -54,7 +57,7 @@ Serial.println("Constructing wifi");
   pinMode(SONOFF_LED, OUTPUT);
   // start ticker with 0.5 because we start in AP mode and try to connect
 
-ticker.attach(0.6, tick);
+  ticker.attach(0.6, tick);
 
 
   WiFiManager wifiManager;
@@ -98,10 +101,10 @@ ticker.attach(0.6, tick);
   wifiManager.setSaveConfigCallback(saveConfigCallback);
 
 
-Serial.println("Wifi about to connect");
+log.println("Wifi about to connect");
 
   if (!wifiManager.autoConnect(hostname)) {
-    Serial.println("failed to connect and hit timeout");
+    log.println("failed to connect and hit timeout");
     //reset and try again, or maybe put it to deep sleep
     ESP.reset();
     delay(1000);
@@ -110,7 +113,7 @@ Serial.println("Wifi about to connect");
   //Serial.println(custom_blynk_token.getValue());
   //save the custom parameters to FS
   if (shouldSaveConfig) {
-    Serial.println("Saving config");
+    log.println("Saving config");
     WMSettings newSettings;
     strcpy(newSettings.bootState, custom_boot_state.getValue());
 
@@ -120,9 +123,6 @@ Serial.println("Wifi about to connect");
     strcpy(newSettings.mqttTopic, custom_mqtt_topic.getValue());
     strcpy(newSettings.sonoffHostname, custom_sonoff_hostname.getValue());
     
-
-    Serial.println(sonoffSettings.bootState());
-
     sonoffSettings.save(newSettings);
     
     ESP.restart();
@@ -130,8 +130,7 @@ Serial.println("Wifi about to connect");
 
   ticker.detach();
 
-
-Serial.println("Constructed wifi");
+  log.println("Constructed wifi");
 }
 
 
