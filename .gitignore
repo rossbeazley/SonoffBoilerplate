@@ -6,3 +6,4 @@ ctestBuild/
 .piolibdeps
 .vscode/c_cpp_properties.json
 .pioenvs
+.vscode/launch.json
