@@ -15,7 +15,7 @@
 
 #include "buttons/DebouncedGPIO.h"
 
-#include "setup/OTAUpdate.h"
+#include <OTAUpdate.h>
 
 class StateDebug : public RelayLightSwitchObserver
 {
