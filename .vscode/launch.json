@@ -6,8 +6,8 @@
             "request": "launch",
             "cwd": "${workspaceRoot}",
             "name": "PlatformIO Debugger",
-            "target": "/home/rdlb/programing/arduino/SonoffBoilerplate/.pioenvs/esp01_1m/firmware.elf",
-            "gdbpath": "/home/rdlb/.platformio/penv/bin/piodebuggdb",
+            "target": "/Users/beazlr02/workspace/arduino/SonoffBoilerplate/.pioenvs/esp01_1m/firmware.elf",
+            "gdbpath": "/Users/beazlr02/.platformio/penv/bin/piodebuggdb",
             "autorun": [ "source .pioinit" ]
         }
     ]
